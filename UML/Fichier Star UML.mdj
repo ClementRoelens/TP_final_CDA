@@ -182,7 +182,7 @@
 											"top": 326,
 											"width": 55.18359375,
 											"height": 13,
-											"text": "Salarié"
+											"text": "Salarie"
 										},
 										{
 											"_type": "LabelView",
@@ -362,7 +362,7 @@
 											"top": 234.5,
 											"width": 154,
 											"height": 13,
-											"text": "Pointer"
+											"text": "Clock"
 										},
 										{
 											"_type": "LabelView",
@@ -561,7 +561,7 @@
 											"top": 298.5,
 											"width": 81,
 											"height": 13,
-											"text": "Se connecter"
+											"text": "Login"
 										},
 										{
 											"_type": "LabelView",
@@ -594,7 +594,7 @@
 									"font": "Arial;13;0",
 									"left": 291,
 									"top": 291.5,
-									"width": 91.6435546875,
+									"width": 91,
 									"height": 25,
 									"stereotypeLabel": {
 										"$ref": "AAAAAAGO8EuODxI1JQk="
@@ -760,7 +760,7 @@
 											"top": 386.5,
 											"width": 167,
 											"height": 13,
-											"text": "Consulter emploi du temps"
+											"text": "Consult schedule"
 										},
 										{
 											"_type": "LabelView",
@@ -793,7 +793,7 @@
 									"font": "Arial;13;0",
 									"left": 533,
 									"top": 379.5,
-									"width": 177.57177734375,
+									"width": 177,
 									"height": 25,
 									"stereotypeLabel": {
 										"$ref": "AAAAAAGO8EvT9xJnVmA="
@@ -1679,7 +1679,7 @@
 											"top": 702.5,
 											"width": 188,
 											"height": 13,
-											"text": "Se connecter en tant qu'admin"
+											"text": "Login as admin"
 										},
 										{
 											"_type": "LabelView",
@@ -1712,7 +1712,7 @@
 									"font": "Arial;13;0",
 									"left": 265.5,
 									"top": 695.5,
-									"width": 198.73486328125,
+									"width": 198,
 									"height": 25,
 									"stereotypeLabel": {
 										"$ref": "AAAAAAGO8Eyt4BanIBw="
@@ -1878,7 +1878,7 @@
 											"top": 550.5,
 											"width": 210,
 											"height": 13,
-											"text": "Voir tous les pointages"
+											"text": "See all clocks"
 										},
 										{
 											"_type": "LabelView",
@@ -2077,7 +2077,7 @@
 											"top": 602.5,
 											"width": 135,
 											"height": 13,
-											"text": "Rechercher un salarié"
+											"text": "Seek a salarie"
 										},
 										{
 											"_type": "LabelView",
@@ -2110,7 +2110,7 @@
 									"font": "Arial;13;0",
 									"left": 894.5,
 									"top": 595.5,
-									"width": 145.84619140625,
+									"width": 145,
 									"height": 25,
 									"stereotypeLabel": {
 										"$ref": "AAAAAAGO8GPlORu5rZA="
@@ -2274,7 +2274,7 @@
 											"top": 478.5,
 											"width": 180,
 											"height": 13,
-											"text": "Consulter détails d'un salarié"
+											"text": "Consults salarie's details"
 										},
 										{
 											"_type": "LabelView",
@@ -2303,7 +2303,7 @@
 									"font": "Arial;13;0",
 									"left": 871.5,
 									"top": 471.5,
-									"width": 190.806640625,
+									"width": 190,
 									"height": 25,
 									"stereotypeLabel": {
 										"$ref": "AAAAAAGO8GP/ARx+RqM="
@@ -3014,7 +3014,7 @@
 											"top": 906.5,
 											"width": 186,
 											"height": 13,
-											"text": "Générer rapport sur un salarié"
+											"text": "Create report on a salarie"
 										},
 										{
 											"_type": "LabelView",
@@ -3047,7 +3047,7 @@
 									"font": "Arial;13;0",
 									"left": 329,
 									"top": 899.5,
-									"width": 197.12255859375,
+									"width": 196,
 									"height": 25,
 									"stereotypeLabel": {
 										"$ref": "AAAAAAGO8GXj4iS6+cc="
@@ -3209,11 +3209,11 @@
 												"$ref": "AAAAAAGO8GYSsiYU1Ik="
 											},
 											"font": "Arial;13;1",
-											"left": 874.5,
+											"left": 875.5,
 											"top": 726.5,
-											"width": 91,
+											"width": 96,
 											"height": 13,
-											"text": "Créer salarié"
+											"text": "Create salarie"
 										},
 										{
 											"_type": "LabelView",
@@ -3244,9 +3244,9 @@
 										}
 									],
 									"font": "Arial;13;0",
-									"left": 869.5,
+									"left": 870.5,
 									"top": 719.5,
-									"width": 101,
+									"width": 106,
 									"height": 25,
 									"stereotypeLabel": {
 										"$ref": "AAAAAAGO8GYSsiYVu0c="
@@ -3346,7 +3346,7 @@
 							"containerChangeable": true,
 							"left": 848,
 							"top": 696,
-							"width": 144,
+							"width": 151,
 							"height": 72,
 							"nameCompartment": {
 								"$ref": "AAAAAAGO8GYSsiYU1Ik="
@@ -3412,7 +3412,7 @@
 											"top": 814.5,
 											"width": 106,
 											"height": 13,
-											"text": "Modifier salarié"
+											"text": "Update salarie"
 										},
 										{
 											"_type": "LabelView",
@@ -3611,7 +3611,7 @@
 											"top": 918.5,
 											"width": 109,
 											"height": 13,
-											"text": "Supprimer salarié"
+											"text": "Delete salarie"
 										},
 										{
 											"_type": "LabelView",
@@ -3644,7 +3644,7 @@
 									"font": "Arial;13;0",
 									"left": 777,
 									"top": 911.5,
-									"width": 119.8271484375,
+									"width": 119,
 									"height": 25,
 									"stereotypeLabel": {
 										"$ref": "AAAAAAGO8GZKAieXLPk="
@@ -4863,7 +4863,7 @@
 					"_parent": {
 						"$ref": "AAAAAAGO8EirfBDFM7E="
 					},
-					"name": "Salarié",
+					"name": "Salarie",
 					"ownedElements": [
 						{
 							"_type": "UMLAssociation",
@@ -4931,7 +4931,7 @@
 					"_parent": {
 						"$ref": "AAAAAAGO8EirfBDFM7E="
 					},
-					"name": "Pointer",
+					"name": "Clock",
 					"ownedElements": [
 						{
 							"_type": "UMLInclude",
@@ -4954,7 +4954,7 @@
 					"_parent": {
 						"$ref": "AAAAAAGO8EirfBDFM7E="
 					},
-					"name": "Se connecter",
+					"name": "Login",
 					"ownedElements": [
 						{
 							"_type": "UMLExtend",
@@ -4977,7 +4977,7 @@
 					"_parent": {
 						"$ref": "AAAAAAGO8EirfBDFM7E="
 					},
-					"name": "Consulter emploi du temps"
+					"name": "Consult schedule"
 				},
 				{
 					"_type": "UMLActor",
@@ -5035,7 +5035,7 @@
 					"_parent": {
 						"$ref": "AAAAAAGO8EirfBDFM7E="
 					},
-					"name": "Se connecter en tant qu'admin",
+					"name": "Login as admin",
 					"ownedElements": [
 						{
 							"_type": "UMLAssociation",
@@ -5153,7 +5153,7 @@
 					"_parent": {
 						"$ref": "AAAAAAGO8EirfBDFM7E="
 					},
-					"name": "Voir tous les pointages",
+					"name": "See all clocks",
 					"ownedElements": [
 						{
 							"_type": "UMLInclude",
@@ -5202,7 +5202,7 @@
 					"_parent": {
 						"$ref": "AAAAAAGO8EirfBDFM7E="
 					},
-					"name": "Rechercher un salarié"
+					"name": "Seek a salarie"
 				},
 				{
 					"_type": "UMLUseCase",
@@ -5210,7 +5210,7 @@
 					"_parent": {
 						"$ref": "AAAAAAGO8EirfBDFM7E="
 					},
-					"name": "Consulter détails d'un salarié"
+					"name": "Consults salarie's details"
 				},
 				{
 					"_type": "UMLUseCase",
@@ -5218,7 +5218,7 @@
 					"_parent": {
 						"$ref": "AAAAAAGO8EirfBDFM7E="
 					},
-					"name": "Générer rapport sur un salarié"
+					"name": "Create report on a salarie"
 				},
 				{
 					"_type": "UMLUseCase",
@@ -5226,7 +5226,7 @@
 					"_parent": {
 						"$ref": "AAAAAAGO8EirfBDFM7E="
 					},
-					"name": "Créer salarié",
+					"name": "Create salarie",
 					"ownedElements": [
 						{
 							"_type": "UMLInclude",
@@ -5249,7 +5249,7 @@
 					"_parent": {
 						"$ref": "AAAAAAGO8EirfBDFM7E="
 					},
-					"name": "Modifier salarié"
+					"name": "Update salarie"
 				},
 				{
 					"_type": "UMLUseCase",
@@ -5257,7 +5257,7 @@
 					"_parent": {
 						"$ref": "AAAAAAGO8EirfBDFM7E="
 					},
-					"name": "Supprimer salarié"
+					"name": "Delete salarie"
 				}
 			]
 		},
@@ -9034,7 +9034,7 @@
 													"top": 47,
 													"width": 65.18359375,
 													"height": 13,
-													"text": "Employe"
+													"text": "Salarie"
 												},
 												{
 													"_type": "LabelView",
@@ -9705,7 +9705,7 @@
 												"$ref": "AAAAAAGO8JWfyqwVDxs="
 											},
 											"edgePosition": 1,
-											"text": "3 : Seek user by email"
+											"text": "3 : Seek salarie by email"
 										},
 										{
 											"_type": "EdgeLabelView",
@@ -9806,9 +9806,9 @@
 												"$ref": "AAAAAAGO8JYJS6ws7Yk="
 											},
 											"font": "Arial;13;0",
-											"left": 933,
+											"left": 926,
 											"top": 220,
-											"width": 293.36962890625,
+											"width": 306.3759765625,
 											"height": 13,
 											"alpha": 1.5707963267948966,
 											"distance": 10,
@@ -9816,7 +9816,7 @@
 												"$ref": "AAAAAAGO8JYJS6wth7o="
 											},
 											"edgePosition": 1,
-											"text": "4 : Send back user informations of which password"
+											"text": "4 : Send back salarie informations of which password"
 										},
 										{
 											"_type": "EdgeLabelView",
@@ -10164,7 +10164,7 @@
 													"top": 275,
 													"width": 65.18359375,
 													"height": 13,
-													"text": "Employe"
+													"text": "Salarie"
 												},
 												{
 													"_type": "LabelView",
@@ -10723,7 +10723,7 @@
 							"_parent": {
 								"$ref": "AAAAAAGO8IhYVKl5xMQ="
 							},
-							"name": "Seek user by email",
+							"name": "Seek salarie by email",
 							"source": {
 								"$ref": "AAAAAAGO8JN5aqs0W+k="
 							},
@@ -10737,7 +10737,7 @@
 							"_parent": {
 								"$ref": "AAAAAAGO8IhYVKl5xMQ="
 							},
-							"name": "Send back user informations of which password",
+							"name": "Send back salarie informations of which password",
 							"source": {
 								"$ref": "AAAAAAGO8JUqSav03Aw="
 							},
@@ -10840,7 +10840,7 @@
 							"_parent": {
 								"$ref": "AAAAAAGO8IhYVKl5xMQ="
 							},
-							"name": "Employe",
+							"name": "Salarie",
 							"represent": {
 								"$ref": "AAAAAAGO8JMqYqrx7cQ="
 							},
@@ -10888,7 +10888,7 @@
 							"_parent": {
 								"$ref": "AAAAAAGO8IhYVKl5xMQ="
 							},
-							"name": "Employe",
+							"name": "Salarie",
 							"represent": {
 								"$ref": "AAAAAAGO8WOaxeIjDno="
 							},
