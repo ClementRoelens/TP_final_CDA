@@ -21,11 +21,20 @@ const styles = StyleSheet.create({
          display:"flex",
          justifyContent:"center",
          alignContent:"center",
-         borderRadius:8
+         borderRadius:8,
+         // Drop shadows à factoriser
+         shadowColor: '#000',
+         shadowOffset: {
+           width: 4, 
+           height: 2,
+         },
+         shadowOpacity: 0.35, 
+         shadowRadius: 3.5, 
+         elevation: 3, 
         },
         text :{
             color:"#EBEBEB",
-            fontWeight:"400",
+            fontWeight:"500",
             fontSize:27,
             textAlign:"center"
     },

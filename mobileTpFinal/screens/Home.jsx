@@ -1,32 +1,40 @@
-import { View, Text, TextInput, Pressable, StyleSheet } from 'react-native'
+import { View, Text, TextInput, Pressable, StyleSheet, ScrollView } from 'react-native'
 import React from 'react'
 import GuestHeaderComponent from '../components/GuestHeaderComponent'
 import Button from '../components/Button'
+import InputAndLabel from '../components/InputAndLabel'
 
 const Home = () => {
   return (
-    <View>
+    <ScrollView style={styles.mainContainer}>
       <GuestHeaderComponent/>
-      <View style={styles.overall}>
-        <TextInput placeholder="abc@example.com" autoComplete="email"/>
-        <TextInput placeholder="****" autoComplete="password" secureTextEntry/>
+      <View style={styles.form}>
+        <InputAndLabel label={"Email :"} placeholder={"abd@example.com"} />
+        <InputAndLabel label={"Mot de passe :"} placeholder={"*****"} isSecure={true} />
         <Button text={"Se connecter"} />
         <Pressable>
             <Text style={styles.pressableText}>Mot de passe oublié</Text>
         </Pressable>
       </View>
-    </View>
+    </ScrollView>
   )
 }
 
 const styles = StyleSheet.create({
-    overall:{
-        display:"flex",
-        flexDirection:"column",
-        justifyContent:"center"
+    mainContainer :{
+        // flex:1
+    },
+    form:{
+      marginTop:50,
+        flex:1,
+        justifyContent:"center",
+        alignItems:"center",
+        rowGap:35
     },
     pressableText : {
-            textDecorationLine : "underline"
+        textDecorationLine : "underline",
+        textAlign:"center",
+        color:"#0E0E0E"
     }
 });
 

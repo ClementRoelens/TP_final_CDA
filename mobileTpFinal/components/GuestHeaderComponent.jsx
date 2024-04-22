@@ -12,7 +12,6 @@ const GuestHeaderComponent = () => {
 
 const styles = StyleSheet.create({
     background: {
-        // background: "linear-gradient(#5764A0, #535A75)",
         height:297,
         display:"flex",
         justifyContent: "center",
