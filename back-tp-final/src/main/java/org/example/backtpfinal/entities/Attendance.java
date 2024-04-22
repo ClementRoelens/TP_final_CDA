@@ -20,7 +20,11 @@ import java.util.UUID;
 public class Attendance {
     @Id
     private UUID id;
-
+    private LocalDateTime start;
+    private LocalDateTime end;
+    @ManyToOne
+    @JoinColumn(name="attendance_id")
+    private Employee employee;
     public void setId(UUID id) {
         this.id = id;
     }
@@ -29,9 +33,4 @@ public class Attendance {
         return id;
     }
 
-    private LocalDateTime start;
-    private LocalDateTime end;
-    @ManyToOne
-    @JoinColumn(name="attendance_id")
-    private Employee employee;
 }
