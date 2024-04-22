@@ -22,7 +22,7 @@ public class Address {
     private String zipCode;
     private String town;
     private String country;
-    @OneToMany(mappedBy = "adress", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "address", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Employee> employeesList;
 
     public void setId(UUID id) {
