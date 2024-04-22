@@ -10,7 +10,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.UUID;
 
 @Entity
@@ -34,5 +33,5 @@ public class Attendance {
     private LocalDateTime end;
     @ManyToOne
     @JoinColumn(name="attendance_id")
-    private Salarie salarie;
+    private Employee employee;
 }

@@ -12,7 +12,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @Builder
 @Entity
-public class Salarie {
+public class Employee {
 
     @Id
     private UUID id;
@@ -21,16 +21,18 @@ public class Salarie {
     private Date birthDate;
     private String gender;
     private String email;
+    private double pay;
     private String password;
     private String role;
+    private String photoPath;
     @ManyToOne
     @JoinColumn(name="adress_id")
     private Address address;
     @OneToMany
-            (mappedBy = "salarie", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+            (mappedBy = "employee", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Attendance> attendancesList;
 
-    @OneToMany(mappedBy = "salarie", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Report> reportList;
 
 

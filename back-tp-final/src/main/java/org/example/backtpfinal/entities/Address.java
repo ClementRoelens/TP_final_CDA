@@ -19,11 +19,11 @@ public class Address {
     private int number;
     private String street;
     private String complement;
-    private String postalCode;
+    private String zipCode;
     private String town;
     private String country;
     @OneToMany(mappedBy = "adress", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Salarie> salarieList;
+    private List<Employee> employeesList;
 
     public void setId(UUID id) {
         this.id = id;
