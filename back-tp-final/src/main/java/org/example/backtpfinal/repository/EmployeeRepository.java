@@ -12,7 +12,7 @@ import java.util.UUID;
 public interface EmployeeRepository extends JpaRepository<Employee, UUID> {
 
 //    @Override
-    Optional<Employee> findById(Long aLong);
+//    Optional<Employee> findById(Long aLong);
 
 
     Optional<Employee> findByEmail(String email);
