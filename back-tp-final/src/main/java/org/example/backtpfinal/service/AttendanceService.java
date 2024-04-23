@@ -21,7 +21,7 @@ public class AttendanceService implements IBaseService<Attendance> {
     private AttendanceRepository attendanceRepository;
 
     public List<Attendance> getAllAttendanceByEmployeeId(UUID idEmployee) {
-        Employee employee = employeeRepository.findEmployeeById(idEmployee);
+        Employee employee = employeeRepository.findById(idEmployee).orElse(null);
         if (employee != null) {
 
             return employee.getAttendancesList();

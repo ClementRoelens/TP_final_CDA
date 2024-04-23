@@ -31,15 +31,44 @@ public class EmployeeService implements UserDetailsService, IBaseService<Employe
 
     @Autowired
     private EmployeeRepository employeeRepository;
-
+    @Autowired
+    private AttendanceRepository attendanceRepository;
     @Lazy
     @Autowired
     private AuthenticationManager authenticationManager;
-
     @Autowired
     private JwtTokenProvider tokenProvider;
-
+    @Lazy
+    @Autowired
     private PasswordEncoder passwordEncoder;
+
+
+    @Override
+    public Employee save(Employee element) {
+        return employeeRepository.save(element);
+    }
+
+    @Override
+    public List<Employee> getAll() {
+        return employeeRepository.findAll();
+    }
+
+    @Override
+    public Employee getById(UUID id) throws EmployeeNotFound {
+        return employeeRepository.findById(id).orElseThrow(() -> new EmployeeNotFound(id));
+    }
+
+    @Override
+    public Employee update(Employee element) {
+        return null;
+    }
+
+
+
+    @Override
+    public void deleteById(UUID id) {
+
+    }
 
     public boolean verifyEmployee(String email, String password) {
         return employeeRepository.findByEmail(email)
@@ -67,46 +96,8 @@ public class EmployeeService implements UserDetailsService, IBaseService<Employe
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         return employeeRepository.findByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException("Employee not found with email: " + email));
-
-    @Autowired
-    private EmployeeRepository employeeRepository;
-
-    @Autowired
-    private AttendanceRepository attendanceRepository;
-
-
-
-    @Override
-    public Employee save(Employee element) {
-        return employeeRepository.save(element);
-    }
-
-    @Override
-    public List<Employee> getAll() {
-        return employeeRepository.findAll();
-    }
-
-    @Override
-    public Employee getById(UUID id) throws EmployeeNotFound {
-
-        Employee employee = employeeRepository.findEmployeeById(id);
-
-        if (employee == null) {
-            throw new EmployeeNotFound(id);
-        }
-
-        return employee;
-    }
-
-    @Override
-    public Employee update(Employee element) {
-        return null;
     }
 
 
 
-    @Override
-    public void deleteById(UUID id) {
-
-    }
 }
