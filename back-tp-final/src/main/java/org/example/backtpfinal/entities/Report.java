@@ -16,6 +16,7 @@ import java.util.UUID;
 @Builder
 public class Report {
     @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
     private int workedHoursRate;
     private LocalDateTime startDate;
