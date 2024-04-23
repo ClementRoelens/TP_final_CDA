@@ -16,16 +16,13 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
+
 @Entity
 public class Employee implements UserDetails {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
     @NotBlank(message = "Please enter employee firstname")
     private String firstName;
 
@@ -45,8 +42,8 @@ public class Employee implements UserDetails {
     private String password;
     private String role;
     private String photoPath;
-    @ManyToOne
-    @JoinColumn(name="address_id",nullable = false)
+    @OneToOne
+    @JoinColumn(name="adress_id",nullable = false)
     private Address address;
 
     @OneToMany(mappedBy = "employee")
@@ -55,6 +52,8 @@ public class Employee implements UserDetails {
     @OneToMany(mappedBy = "employee")
     private List<Report> reportList;
 
+    public Employee() {
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

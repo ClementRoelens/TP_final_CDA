@@ -10,7 +10,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AttendanceDTO {
-    private long id;
+    private Long id;
     private LocalDateTime start;
     private LocalDateTime end;
 }

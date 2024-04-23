@@ -18,7 +18,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.UUID;
+import java.util.Optional;
+
 
 @RestController
 @RequestMapping("/api/employees")
@@ -50,11 +51,19 @@ public class EmployeeController {
     }
 
     @GetMapping("/{id}")
+<<<<<<< HEAD
     public ResponseEntity<Employee> getEmployeeById(@PathVariable long id) {
         try {
             Employee employee = employeeService.getById(id);
             return ResponseEntity.ok(employee);
         } catch (EmployeeNotFound e) {
+=======
+    public ResponseEntity<Optional<Employee>> getEmployeeById(@PathVariable Long id){
+        try {
+            Optional<Employee> employee = employeeService.getById(id);
+            return  ResponseEntity.ok(employee);
+        }catch (EmployeeNotFound e){
+>>>>>>> app-mobile-viewSchedule
             return ResponseEntity.notFound().build();
         }
     }
@@ -65,9 +74,15 @@ public class EmployeeController {
     }
 
     @GetMapping("/{employeeId}/attendance")
+<<<<<<< HEAD
     public ResponseEntity<List<Attendance>> getAllAttendanceByEmployeeId(@PathVariable long employeeId, Attendance attendance) {
         List<Attendance> attendanceList = employeeService.getById(employeeId).getAttendancesList();
         return new ResponseEntity<>(List.copyOf(attendanceList), HttpStatus.OK);
+=======
+    public ResponseEntity<List<Attendance>> getAllAttendanceByEmployeeId(@PathVariable Long employeeId){
+        List<Attendance> attendanceList = employeeService.getById(employeeId).orElseThrow().getAttendancesList();
+        return  new ResponseEntity<>(List.copyOf(attendanceList), HttpStatus.OK);
+>>>>>>> app-mobile-viewSchedule
     }
 
     @PostMapping("/signin")

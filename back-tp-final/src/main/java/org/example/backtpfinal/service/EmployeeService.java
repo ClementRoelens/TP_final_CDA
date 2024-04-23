@@ -56,10 +56,15 @@ public class EmployeeService implements UserDetailsService, IBaseService<Employe
     }
 
     @Override
-    public Employee getById(long id) throws EmployeeNotFound {
-        Employee employee = employeeRepository.findById(id)
-                .orElseThrow(() -> new EmployeeNotFound(id));
-        return reduceEmployee(employee);
+    public Optional<Employee> getById(Long id) throws EmployeeNotFound {
+
+        Employee employee = employeeRepository.findEmployeeById(id);
+
+        if (employee == null) {
+            throw new EmployeeNotFound(id);
+        }
+
+        return Optional.of(employee);
     }
 
     @Override
@@ -70,7 +75,7 @@ public class EmployeeService implements UserDetailsService, IBaseService<Employe
 
 
     @Override
-    public void deleteById(long id) {
+    public void deleteById(Long id) {
 
     }
 
