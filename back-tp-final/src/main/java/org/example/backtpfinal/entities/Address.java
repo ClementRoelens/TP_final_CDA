@@ -15,6 +15,7 @@ import java.util.UUID;
 public class Address {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
     private int number;
     private String street;
@@ -25,11 +26,5 @@ public class Address {
     @OneToMany(mappedBy = "address", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Employee> employeesList;
 
-    public void setId(UUID id) {
-        this.id = id;
-    }
 
-    public UUID getId() {
-        return id;
-    }
 }
