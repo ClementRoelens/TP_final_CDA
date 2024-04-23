@@ -39,15 +39,13 @@ public class JwtTokenProvider {
         Date currentDate = new Date();
         Date expireDate = new Date(currentDate.getTime() + 86400000);
 
-        String token = Jwts.builder()
+        return Jwts.builder()
                 .setSubject(username)
                 .claim("roles", roles)
                 .setIssuedAt(new Date())
                 .setExpiration(expireDate)
                 .signWith(getSigningKey(), SignatureAlgorithm.HS512)
                 .compact();
-
-        return token;
     }
     public boolean validateToken(String token) {
         try {

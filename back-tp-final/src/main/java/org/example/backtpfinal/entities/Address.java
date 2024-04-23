@@ -13,8 +13,11 @@ import java.util.UUID;
 
 
 @Entity
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
-public class Address  {
+public class Address {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,15 +28,10 @@ public class Address  {
     private String zipCode;
     private String town;
     private String country;
-  /*  @OneToMany(mappedBy = "address", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<Employee> employeesList;
-*/
-  @OneToOne(mappedBy = "address") // One-to-One relationship with Employee
-  private Employee employee;
-    public Address() {
-    }
+    @OneToOne(mappedBy = "address")
+    private Employee employee;
 
-    public AddressDTO toDTO(){
-        return new AddressDTO(id,number,street,complement,zipCode,town,country);
+    public AddressDTO toDTO() {
+        return new AddressDTO(id, number, street, complement, zipCode, town, country);
     }
 }

@@ -8,16 +8,18 @@ import jakarta.validation.constraints.Past;
 import lombok.*;
 import org.example.backtpfinal.dto.EmployeeDTO;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.hibernate.annotations.GenericGenerator;
 
-import java.util.Collection;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 
 @Entity
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Employee implements UserDetails {
 
     @Id
@@ -43,7 +45,7 @@ public class Employee implements UserDetails {
     private String role;
     private String photoPath;
     @OneToOne
-    @JoinColumn(name="adress_id",nullable = false)
+    @JoinColumn(name="address_id",nullable = false)
     private Address address;
 
     @OneToMany(mappedBy = "employee")
@@ -52,37 +54,39 @@ public class Employee implements UserDetails {
     @OneToMany(mappedBy = "employee")
     private List<Report> reportList;
 
-    public Employee() {
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return Collections.singletonList(new SimpleGrantedAuthority(role));
     }
 
     @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+    public String getPassword() {
+        return password;
     }
 
     @Override
     public String getUsername() {
-        return null;
+        return email;
     }
 
     @Override
     public boolean isAccountNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isEnabled() {
-        return false;
+        return true;
     }
 
     public EmployeeDTO toDTO(){

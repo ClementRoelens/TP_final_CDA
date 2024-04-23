@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -16,7 +17,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.example.backtpfinal.exception.EmployeeNotFound;
 import org.example.backtpfinal.repository.AttendanceRepository;
+
+import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class EmployeeService implements UserDetailsService, IBaseService<Employee> {
@@ -44,7 +48,7 @@ public class EmployeeService implements UserDetailsService, IBaseService<Employe
 
     // Pour éviter d'avoir une boucle infinie entre employé et ses attributs
     private Employee reduceEmployee(Employee employee){
-        employee.getAddress().setEmployeesList(null);
+        employee.getAddress().setEmployee(null);
         employee.getAttendancesList().forEach(a -> a.setEmployee(null));
         employee.getReportList().forEach(r -> r.setEmployee(null));
         return employee;
@@ -57,14 +61,13 @@ public class EmployeeService implements UserDetailsService, IBaseService<Employe
 
     @Override
     public Optional<Employee> getById(Long id) throws EmployeeNotFound {
-
         Employee employee = employeeRepository.findEmployeeById(id);
 
         if (employee == null) {
             throw new EmployeeNotFound(id);
         }
 
-        return Optional.of(employee);
+        return Optional.of(reduceEmployee(employee));
     }
 
     @Override
@@ -87,8 +90,8 @@ public class EmployeeService implements UserDetailsService, IBaseService<Employe
 
     public boolean checkEmployeeNameExist(String email) {return employeeRepository.findByEmail(email).isPresent();}
 
-    public String generateToken(String email, String password){
-        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(email, password));
+    public String generateToken(String email, String password, Collection<? extends GrantedAuthority> authorities){
+        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(email, password, authorities));
         SecurityContextHolder.getContext().setAuthentication(authentication);
         return tokenProvider.generateToken(authentication);
     }

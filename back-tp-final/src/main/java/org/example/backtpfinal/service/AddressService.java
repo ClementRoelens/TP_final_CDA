@@ -30,8 +30,8 @@ public class AddressService implements IBaseService<Address>{
 
 
     @Override
-    public Address save(Address element) {
-        return null;
+    public Address save(Address address) {
+        return addressRepository.save(address);
     }
 
     @Override

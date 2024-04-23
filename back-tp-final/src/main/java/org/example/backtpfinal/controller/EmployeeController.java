@@ -15,8 +15,10 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -39,31 +41,29 @@ public class EmployeeController {
     }
 
     @PostMapping()
-    public ResponseEntity<Employee> createEmployee(@RequestBody @Valid EmployeeDTO employeeDTO) throws EmployeeNotFound {
+    public ResponseEntity<Object> createEmployee(@RequestBody @Valid EmployeeDTO employeeDTO) throws EmployeeNotFound {
         Employee employee = employeeDTO.toEntity();
-        if (employeeDTO.getAddress() == null) {
-            employee.setAddress(addressService.getById(employeeDTO.getAddressId()));
-        } else {
-            addressService.save(employee.getAddress());
+        Address address = addressService.save(employee.getAddress());
+        employee.setAddress(address);
+        employeeService.save(employee);
+        return ResponseEntity.ok(employee.toDTO());
+    }
+
+    @PostMapping("/signin")
+    public ResponseEntity<String> signin(@RequestBody CredentialsDTO credentials) {
+        if (employeeService.verifyEmployee(credentials.getEmail(), credentials.getPassword())) {
+            Employee employee = (Employee) employeeService.loadUserByUsername(credentials.getEmail());
+            return new ResponseEntity<>(employeeService.generateToken(credentials.getEmail(), credentials.getPassword(), employee.getAuthorities()), HttpStatus.ACCEPTED);
         }
-        Employee newEmployee = employeeService.save(employee);
-        return ResponseEntity.ok(newEmployee);
+        return new ResponseEntity<>("Aucun employé ne correspond à cet email", HttpStatus.NOT_FOUND);
     }
 
     @GetMapping("/{id}")
-<<<<<<< HEAD
-    public ResponseEntity<Employee> getEmployeeById(@PathVariable long id) {
-        try {
-            Employee employee = employeeService.getById(id);
-            return ResponseEntity.ok(employee);
-        } catch (EmployeeNotFound e) {
-=======
-    public ResponseEntity<Optional<Employee>> getEmployeeById(@PathVariable Long id){
+    public ResponseEntity<Optional<Employee>> getEmployeeById(@PathVariable Long id) {
         try {
             Optional<Employee> employee = employeeService.getById(id);
-            return  ResponseEntity.ok(employee);
-        }catch (EmployeeNotFound e){
->>>>>>> app-mobile-viewSchedule
+            return ResponseEntity.ok(employee);
+        } catch (EmployeeNotFound e) {
             return ResponseEntity.notFound().build();
         }
     }
@@ -74,23 +74,11 @@ public class EmployeeController {
     }
 
     @GetMapping("/{employeeId}/attendance")
-<<<<<<< HEAD
-    public ResponseEntity<List<Attendance>> getAllAttendanceByEmployeeId(@PathVariable long employeeId, Attendance attendance) {
-        List<Attendance> attendanceList = employeeService.getById(employeeId).getAttendancesList();
-        return new ResponseEntity<>(List.copyOf(attendanceList), HttpStatus.OK);
-=======
-    public ResponseEntity<List<Attendance>> getAllAttendanceByEmployeeId(@PathVariable Long employeeId){
+    public ResponseEntity<List<Attendance>> getAllAttendanceByEmployeeId(@PathVariable Long employeeId) {
         List<Attendance> attendanceList = employeeService.getById(employeeId).orElseThrow().getAttendancesList();
-        return  new ResponseEntity<>(List.copyOf(attendanceList), HttpStatus.OK);
->>>>>>> app-mobile-viewSchedule
+        return new ResponseEntity<>(List.copyOf(attendanceList), HttpStatus.OK);
     }
 
-    @PostMapping("/signin")
-    public ResponseEntity<String> signin(@RequestBody CredentialsDTO credentials) {
-        if (employeeService.verifyEmployee(credentials.getEmail(), credentials.getPassword())) {
-            return new ResponseEntity<>(employeeService.generateToken(credentials.getEmail(), credentials.getPassword()), HttpStatus.ACCEPTED);
-        }
-        return new ResponseEntity<>("Aucun employé ne correspond à cet email", HttpStatus.NOT_FOUND);
-    }
+
 
 }

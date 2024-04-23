@@ -24,7 +24,6 @@ public class EmployeeDTO {
     private String role;
     private String photoPath;
     private AddressDTO address;
-    private long addressId;
 
     public Employee toEntity(){
         return Employee.builder()
