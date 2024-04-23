@@ -1,6 +1,6 @@
 package org.example.backtpfinal.service;
 
-import jakarta.persistence.EntityNotFoundException;
+
 import org.example.backtpfinal.entities.Employee;
 import org.example.backtpfinal.exception.EmployeeNotFound;
 import org.example.backtpfinal.repository.AttendanceRepository;
@@ -9,8 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+
 @Service
 public class EmployeeService implements  IBaseService<Employee>{
     @Autowired
@@ -32,7 +31,7 @@ public class EmployeeService implements  IBaseService<Employee>{
     }
 
     @Override
-    public Employee getById(UUID id) throws EmployeeNotFound {
+    public Employee getById(Long id) throws EmployeeNotFound {
 
         Employee employee = employeeRepository.findEmployeeById(id);
 
@@ -51,7 +50,7 @@ public class EmployeeService implements  IBaseService<Employee>{
 
 
     @Override
-    public void deleteById(UUID id) {
+    public void deleteById(Long id) {
 
     }
 }

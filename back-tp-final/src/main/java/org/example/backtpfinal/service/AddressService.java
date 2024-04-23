@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.UUID;
+
 @Service
 public class AddressService implements IBaseService<Address>{
     @Autowired
@@ -23,7 +23,7 @@ public class AddressService implements IBaseService<Address>{
     }
 
     @Override
-    public Address getById(UUID id) {
+    public Address getById(Long id) {
         return addressRepository.getById(id);
     }
 
@@ -33,7 +33,7 @@ public class AddressService implements IBaseService<Address>{
     }
 
     @Override
-    public void deleteById(UUID id) {
+    public void deleteById(Long id) {
 
     }
 }

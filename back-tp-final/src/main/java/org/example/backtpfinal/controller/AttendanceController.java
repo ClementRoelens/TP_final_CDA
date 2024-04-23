@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.UUID;
+
 
 @RestController
 @RequestMapping("/api/attendances")
@@ -19,13 +19,13 @@ public class AttendanceController {
     private EmployeeService employeeService;
 
     @PostMapping("/clockIn")
-    public ResponseEntity<String> clockIn(@RequestBody UUID employeeId) {
+    public ResponseEntity<String> clockIn(@RequestBody Long employeeId) {
         String message = attendanceService.clockIn(employeeId);
         return ResponseEntity.ok(message);
     }
 
     @PostMapping("/clockOut")
-    public ResponseEntity<String> clockOut(@RequestBody UUID employeeId) {
+    public ResponseEntity<String> clockOut(@RequestBody Long employeeId) {
         String message = attendanceService.clockOut(employeeId);
         return ResponseEntity.ok(message);
     }

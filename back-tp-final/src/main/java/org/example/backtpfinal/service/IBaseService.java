@@ -9,9 +9,9 @@ import java.util.UUID;
 public interface IBaseService<T> {
     public T save(T element);
     public List<T> getAll();
-    public T getById(UUID id);
+    public T getById(Long id);
     public  T update(T element);
-    public void deleteById (UUID id);
+    public void deleteById (Long id);
 
 
 }

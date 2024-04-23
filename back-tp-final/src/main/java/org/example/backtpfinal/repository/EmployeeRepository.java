@@ -7,9 +7,9 @@ import java.rmi.server.UID;
 import java.util.Optional;
 import java.util.UUID;
 
-public interface EmployeeRepository extends JpaRepository<Employee, UID> {
+public interface EmployeeRepository extends JpaRepository<Employee,Long> {
 
-    Employee findEmployeeById(UUID id);
+    Employee findEmployeeById(Long id);
 
 
 }

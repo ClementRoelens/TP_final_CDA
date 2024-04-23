@@ -14,7 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.UUID;
+
 
 @RestController
 @RequestMapping("/api/employees")
@@ -43,7 +43,7 @@ public class EmployeeController {
         return ResponseEntity.ok(newEmployee);
     }
     @GetMapping("/{id}")
-    public ResponseEntity<Employee> getEmployeeById(@PathVariable UUID id){
+    public ResponseEntity<Employee> getEmployeeById(@PathVariable Long id){
         try {
             Employee employee = employeeService.getById(id);
             return  ResponseEntity.ok(employee);
@@ -54,7 +54,7 @@ public class EmployeeController {
     }
 
     @GetMapping("/{employeeId}/attendance")
-    public ResponseEntity<List<Attendance>> getAllAttendanceByEmployeeId(@PathVariable UUID employeeId, Attendance attendance){
+    public ResponseEntity<List<Attendance>> getAllAttendanceByEmployeeId(@PathVariable Long employeeId, Attendance attendance){
         List<Attendance> attendanceList = employeeService.getById(employeeId).getAttendancesList();
         return  new ResponseEntity<>(List.copyOf(attendanceList), HttpStatus.OK);
     }

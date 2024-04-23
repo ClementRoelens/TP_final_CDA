@@ -20,9 +20,8 @@ import java.util.UUID;
 public class Employee {
 
     @Id
-    @GeneratedValue(generator = "uuid")
-    @GenericGenerator(name = "uuid", strategy = "uuid2")
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
     @NotBlank(message = "Please enter employee firstname")
     private String firstName;
 
@@ -54,11 +53,5 @@ public class Employee {
     private List<Report> reportList;
 
 
-    public void setId(UUID id) {
-        this.id = id;
-    }
 
-    public UUID getId() {
-        return id;
-    }
 }
