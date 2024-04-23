@@ -1,7 +1,7 @@
 package org.example.backtpfinal.controller;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
-import org.example.backtpfinal.dto.AddressDTO;
 import org.example.backtpfinal.dto.CredentialsDTO;
 import org.example.backtpfinal.dto.EmployeeDTO;
 import org.example.backtpfinal.entities.Address;
@@ -11,11 +11,9 @@ import org.example.backtpfinal.exception.EmployeeNotFound;
 import org.example.backtpfinal.service.AddressService;
 import org.example.backtpfinal.service.AttendanceService;
 import org.example.backtpfinal.service.EmployeeService;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
@@ -59,13 +57,24 @@ public class EmployeeController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Optional<Employee>> getEmployeeById(@PathVariable Long id) {
+    public ResponseEntity<EmployeeDTO> getEmployeeById(@PathVariable Long id) {
         try {
-            Optional<Employee> employee = employeeService.getById(id);
-            return ResponseEntity.ok(employee);
-        } catch (EmployeeNotFound e) {
+            return ResponseEntity.ok(employeeService.getById(id).orElse(null).toDTO());
+        } catch (Exception e) {
             return ResponseEntity.notFound().build();
         }
+    }
+
+    @GetMapping("/byMail/{email}")
+    public ResponseEntity<Object> getEmployeeByEmail(@PathVariable String email, HttpServletRequest request){
+        Employee employee = (Employee) employeeService.loadUserByUsername(email);
+        if (employee != null){
+            if (employeeService.compareUserWithToken(employee, request.getHeader("Authorization").substring(7))){
+                return ResponseEntity.ok(employee.toDTO());
+            }
+            return new ResponseEntity<>("Vous tentez d'accéder à des informations ne vous appartenant pas", HttpStatus.UNAUTHORIZED);
+        }
+        return ResponseEntity.notFound().build();
     }
 
     @GetMapping()

@@ -11,6 +11,7 @@ import org.example.backtpfinal.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -47,12 +48,19 @@ public class SecurityConfig {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 
                 .authorizeHttpRequests(authz -> authz
-                        // Pour dev
-                        .anyRequest().permitAll())
+                                // Pour dev
+//                                .anyRequest().permitAll()
+
+                                .requestMatchers("/api/employees/signin").permitAll()
+                                .requestMatchers(HttpMethod.POST, "api/employees").permitAll()
+                                // Le garder à la fin : ce sera notre cas "par défaut"
+                                .anyRequest().authenticated()
+                )
+
+                // Modèles pour écrire dans la chaîne ci-dessus
 //                        .requestMatchers("/notices","/contact","/api/auth/register", "/api/auth/login").permitAll()
 //                        .requestMatchers("/myAccount", "/myLoans", "/myCards").hasRole("USER")
-//                        .requestMatchers("/myBalance").hasAnyRole("USER","ADMIN")
-//                        .requestMatchers("*").authenticated())
+//
 
                 .exceptionHandling(exceptions -> exceptions.authenticationEntryPoint(jwtAuthenticationEntryPoint))
 
@@ -79,8 +87,8 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
-    @Bean
-    public CorsConfigurationSource corsConfigurationSource() {
+    //    @Bean
+    private CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOriginPatterns(Collections.singletonList("*"));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));

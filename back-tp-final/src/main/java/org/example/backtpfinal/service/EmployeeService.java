@@ -46,17 +46,11 @@ public class EmployeeService implements UserDetailsService, IBaseService<Employe
         return employee;
     }
 
-    // Pour éviter d'avoir une boucle infinie entre employé et ses attributs
-    private Employee reduceEmployee(Employee employee){
-        employee.getAddress().setEmployee(null);
-        employee.getAttendancesList().forEach(a -> a.setEmployee(null));
-        employee.getReportList().forEach(r -> r.setEmployee(null));
-        return employee;
-    }
-
     @Override
     public List<Employee> getAll() {
-        return employeeRepository.findAll().stream().map(this::reduceEmployee).toList();
+        return employeeRepository.findAll()
+//                .stream().map(this::reduceEmployee).toList()
+                ;
     }
 
     @Override
@@ -67,7 +61,7 @@ public class EmployeeService implements UserDetailsService, IBaseService<Employe
             throw new EmployeeNotFound(id);
         }
 
-        return Optional.of(reduceEmployee(employee));
+        return Optional.of(employee);
     }
 
     @Override
@@ -101,6 +95,10 @@ public class EmployeeService implements UserDetailsService, IBaseService<Employe
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         return employeeRepository.findByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException("Employee not found with email: " + email));
+    }
+
+    public boolean compareUserWithToken(Employee employee, String token){
+        return tokenProvider.getUsernameFromToken(token).equals(employee.getEmail());
     }
 
 
