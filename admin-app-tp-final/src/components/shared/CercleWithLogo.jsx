@@ -1,12 +1,14 @@
+
 const CercleWithLogo = (props) => {
+    
     const {diameter, imageUrl} = props
 
     const circleStyle = {
         width: diameter,
         height: diameter,
-        borderRadius: "50%", // Pour créer un cercle
-        overflow: "hidden", // Pour cacher les parties de l'image en dehors du cercle
-        position: "relative", // Pour positionner l'image à l'intérieur du cercle
+        borderRadius: "50%", 
+        overflow: "hidden", 
+        position: "relative", 
     };
 
     const imageStyle = {
