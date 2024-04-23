@@ -1,45 +1,62 @@
 package org.example.backtpfinal.controller;
 
-import lombok.NoArgsConstructor;
+import jakarta.validation.Valid;
+import org.example.backtpfinal.dto.EmployeeDTO;
 import org.example.backtpfinal.entities.Attendance;
 import org.example.backtpfinal.entities.Employee;
+import org.example.backtpfinal.exception.EmployeeNotFound;
 import org.example.backtpfinal.service.AttendanceService;
 import org.example.backtpfinal.service.EmployeeService;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/employee")
+@RequestMapping("/api/employees")
 public class EmployeeController {
 
-    @Autowired
-    private EmployeeService employeeService;
 
-    @Autowired
+    private EmployeeService employeeService;
     private AttendanceService attendanceService;
 
-    @GetMapping("/{id")
-    public  ResponseEntity<Optional> getEmployeeById(@PathVariable UUID id){
-        Optional employee = employeeService.getById(id);
-        if (employee != null){
+    private ModelMapper modelMapper;
+
+    @Autowired
+    public EmployeeController(EmployeeService employeeService, AttendanceService attendanceService) {
+        this.employeeService = employeeService;
+        this.attendanceService = attendanceService;
+    }
+
+    @PostMapping("/add")
+    public ResponseEntity<Employee> createEmployee(@RequestBody @Valid EmployeeDTO employeeDTO) throws EmployeeNotFound{
+        Employee employee = modelMapper.map(employeeDTO, Employee.class);
+       /* Employee employee = new Employee();
+        employee.setFirstName(employeeDTO.getFirstName());
+        employee.setLastName(employeeDTO.getLastName());
+        // Continuer avec les autres attributs...*/
+        Employee newEmployee = employeeService.save(employee);
+        return ResponseEntity.ok(newEmployee);
+    }
+    @GetMapping("/{id}")
+    public ResponseEntity<Employee> getEmployeeById(@PathVariable UUID id){
+        try {
+            Employee employee = employeeService.getById(id);
             return  ResponseEntity.ok(employee);
-        }else {
+        }catch (EmployeeNotFound e){
             return ResponseEntity.notFound().build();
         }
 
     }
 
-    @GetMapping("/{employeeId")
-    public List<Attendance> getAllAttendanceByEmployeeId(@PathVariable UUID employeeId){
-        return  attendanceService.getAllAttendanceByEmployeeId(employeeId);
+    @GetMapping("/{employeeId}/attendance")
+    public ResponseEntity<List<Attendance>> getAllAttendanceByEmployeeId(@PathVariable UUID employeeId, Attendance attendance){
+        List<Attendance> attendanceList = employeeService.getById(employeeId).getAttendancesList();
+        return  new ResponseEntity<>(List.copyOf(attendanceList), HttpStatus.OK);
     }
 
 

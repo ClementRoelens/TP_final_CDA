@@ -1,5 +1,8 @@
 package org.example.backtpfinal.service;
 
+import jakarta.persistence.EntityNotFoundException;
+import org.example.backtpfinal.entities.Employee;
+import org.example.backtpfinal.exception.EmployeeNotFound;
 import org.example.backtpfinal.repository.AttendanceRepository;
 import org.example.backtpfinal.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 @Service
-public class EmployeeService implements  IBaseService{
+public class EmployeeService implements  IBaseService<Employee>{
     @Autowired
     private EmployeeRepository employeeRepository;
 
@@ -17,25 +20,35 @@ public class EmployeeService implements  IBaseService{
     private AttendanceRepository attendanceRepository;
 
 
+
     @Override
-    public Object save(Object element) {
-        return null;
+    public Employee save(Employee element) {
+        return employeeRepository.save(element);
     }
 
     @Override
-    public List getAll() {
+    public List<Employee> getAll() {
         return employeeRepository.findAll();
     }
 
     @Override
-    public Optional getById(UUID id) {
-        return Optional.empty();
+    public Employee getById(UUID id) throws EmployeeNotFound {
+
+        Employee employee = employeeRepository.findEmployeeById(id);
+
+        if (employee == null) {
+            throw new EmployeeNotFound(id);
+        }
+
+        return employee;
     }
 
     @Override
-    public Object update(Object element) {
+    public Employee update(Employee element) {
         return null;
     }
+
+
 
     @Override
     public void deleteById(UUID id) {

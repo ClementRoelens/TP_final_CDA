@@ -25,11 +25,5 @@ public class Address {
     @OneToMany(mappedBy = "address", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Employee> employeesList;
 
-    public void setId(UUID id) {
-        this.id = id;
-    }
 
-    public UUID getId() {
-        return id;
-    }
 }

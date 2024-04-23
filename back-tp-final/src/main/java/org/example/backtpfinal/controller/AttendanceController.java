@@ -2,18 +2,32 @@ package org.example.backtpfinal.controller;
 
 import org.example.backtpfinal.entities.Attendance;
 import org.example.backtpfinal.service.AttendanceService;
+import org.example.backtpfinal.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/attendance")
+@RequestMapping("/api/attendances")
 public class AttendanceController {
     @Autowired
     private  AttendanceService attendanceService;
+    @Autowired
+    private EmployeeService employeeService;
 
+    @PostMapping("/clockIn")
+    public ResponseEntity<String> clockIn(@RequestBody UUID employeeId) {
+        String message = attendanceService.clockIn(employeeId);
+        return ResponseEntity.ok(message);
+    }
+
+    @PostMapping("/clockOut")
+    public ResponseEntity<String> clockOut(@RequestBody UUID employeeId) {
+        String message = attendanceService.clockOut(employeeId);
+        return ResponseEntity.ok(message);
+    }
 
 }
