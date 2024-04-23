@@ -3,13 +3,12 @@ package org.example.backtpfinal.controller;
 import org.example.backtpfinal.dto.AddressDTO;
 import org.example.backtpfinal.entities.Address;
 import org.example.backtpfinal.service.AddressService;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.UUID;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/address")
@@ -21,18 +20,11 @@ public class AddressController {
         this.addressService = addressService;
     }
 
-    @PostMapping
+    @PostMapping("/add")
     public ResponseEntity<Address> addNewAddress (@RequestBody AddressDTO dto){
-        Address address = new Address();
-        address.setComplement(dto.getComplement());
-        address.setNumber(dto.getNumber());
-        address.setStreet(dto.getStreet());
-        address.setZipCode(dto.getZipCode());
-        address.setTown(dto.getTown());
-        address.setCountry(dto.getCountry());;
-        Address newAdd = addressService.save(address);
+        Address newAddress = addressService.save(dto);
         System.out.println("add");
-        return  ResponseEntity.ok(newAdd);
+        return new ResponseEntity<>(newAddress, HttpStatus.CREATED);
 
     }
 
@@ -56,14 +48,14 @@ public class AddressController {
 //    }
 
     @GetMapping("/{id}")
-    public  Address getAddressById (@PathVariable Long id) {
+    public Optional<Address> getAddressById (@PathVariable Long id) {
         System.out.println("methode");
 
        // try{
-            Address address = addressService.getById(id);
+            Optional<Address> address = addressService.getById(id);
             System.out.println(address);
-           // return address;
-        return new Address(58L,24,"test","test2","zip","town","udfhudh",new ArrayList<>());
+           return address;
+       // return new Address(58L,24,"test","test2","zip","town","udfhudh",new ArrayList<>());
        // }catch (Exception e){
         //    return null;
        // }
@@ -72,7 +64,8 @@ public class AddressController {
     @GetMapping("/test")
     public  Address getTest () {
 
-        return new Address(58L,24,"test","test2","zip","town","udfhudh",new ArrayList<>());
+        //return new Address(58L,24,"test","test2","zip","town","udfhudh",new ArrayList<>());
+        return new Address(58L,24,"test","test2","zip","town","udfhudh",null);
     }
 
 }

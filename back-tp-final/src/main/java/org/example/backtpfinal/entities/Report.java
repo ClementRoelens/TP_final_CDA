@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
-@Builder
+
 public class Report {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class EmployeeService implements  IBaseService<Employee>{
@@ -31,7 +32,7 @@ public class EmployeeService implements  IBaseService<Employee>{
     }
 
     @Override
-    public Employee getById(Long id) throws EmployeeNotFound {
+    public Optional<Employee> getById(Long id) throws EmployeeNotFound {
 
         Employee employee = employeeRepository.findEmployeeById(id);
 
@@ -39,7 +40,7 @@ public class EmployeeService implements  IBaseService<Employee>{
             throw new EmployeeNotFound(id);
         }
 
-        return employee;
+        return Optional.of(employee);
     }
 
     @Override

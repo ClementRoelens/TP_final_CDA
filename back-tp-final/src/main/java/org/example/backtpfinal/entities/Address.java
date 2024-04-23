@@ -2,6 +2,7 @@ package org.example.backtpfinal.entities;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -11,6 +12,7 @@ import java.util.UUID;
 
 
 @Entity
+@Builder
 public class Address  {
 
     @Id
@@ -22,13 +24,15 @@ public class Address  {
     private String zipCode;
     private String town;
     private String country;
-    @OneToMany(mappedBy = "address", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+  /*  @OneToMany(mappedBy = "address", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Employee> employeesList;
-
+*/
+  @OneToOne(mappedBy = "address") // One-to-One relationship with Employee
+  private Employee employee;
     public Address() {
     }
 
-    public Address(Long id, int number, String street, String complement, String zipCode, String town, String country, List<Employee> employeesList) {
+    public Address(Long id, int number, String street, String complement, String zipCode, String town, String country, Employee employee) {
         this.id = id;
         this.number = number;
         this.street = street;
@@ -36,7 +40,7 @@ public class Address  {
         this.zipCode = zipCode;
         this.town = town;
         this.country = country;
-        this.employeesList = employeesList;
+        this.employee = employee;
     }
 
     public Long getId() {
@@ -95,12 +99,12 @@ public class Address  {
         this.country = country;
     }
 
-    public List<Employee> getEmployeesList() {
-        return employeesList;
+    public Employee getEmployee() {
+        return employee;
     }
 
-    public void setEmployeesList(List<Employee> employeesList) {
-        this.employeesList = employeesList;
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
     }
 
     @Override

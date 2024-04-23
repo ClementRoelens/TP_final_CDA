@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @RestController
@@ -43,9 +44,9 @@ public class EmployeeController {
         return ResponseEntity.ok(newEmployee);
     }
     @GetMapping("/{id}")
-    public ResponseEntity<Employee> getEmployeeById(@PathVariable Long id){
+    public ResponseEntity<Optional<Employee>> getEmployeeById(@PathVariable Long id){
         try {
-            Employee employee = employeeService.getById(id);
+            Optional<Employee> employee = employeeService.getById(id);
             return  ResponseEntity.ok(employee);
         }catch (EmployeeNotFound e){
             return ResponseEntity.notFound().build();
@@ -54,8 +55,8 @@ public class EmployeeController {
     }
 
     @GetMapping("/{employeeId}/attendance")
-    public ResponseEntity<List<Attendance>> getAllAttendanceByEmployeeId(@PathVariable Long employeeId, Attendance attendance){
-        List<Attendance> attendanceList = employeeService.getById(employeeId).getAttendancesList();
+    public ResponseEntity<List<Attendance>> getAllAttendanceByEmployeeId(@PathVariable Long employeeId){
+        List<Attendance> attendanceList = employeeService.getById(employeeId).orElseThrow().getAttendancesList();
         return  new ResponseEntity<>(List.copyOf(attendanceList), HttpStatus.OK);
     }
 

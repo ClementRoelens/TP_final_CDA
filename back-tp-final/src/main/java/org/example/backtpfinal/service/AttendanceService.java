@@ -40,8 +40,8 @@ public class AttendanceService implements IBaseService<Attendance> {
     }
 
     @Override
-    public Attendance getById(Long id) {
-        return attendanceRepository.getById(id);
+    public Optional<Attendance> getById(Long id) {
+        return Optional.of(attendanceRepository.getById(id));
     }
 
     @Override
