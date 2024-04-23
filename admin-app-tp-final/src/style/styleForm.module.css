@@ -1,0 +1,58 @@
+/* styles.css */
+
+/* Style pour la balise h3 */
+.h3 {
+    text-align: center;
+    height: 27px;
+    font-size: 22px;
+    color: #000000;
+    font-family: Inter, sans-serif;
+  }
+  
+  /* Style pour le formulaire */
+  .form {
+    background-color: #707899;
+    width: 1194px;
+    height: 879px;
+    position: absolute;
+    top: 72px;
+    left: 123px;
+    border-radius: 41px;
+  }
+  
+  /* Style pour les labels */
+  .label {
+    color: #EBEBEB;
+    font-size: 22px;
+    font-family: Inter, sans-serif;
+  }
+  
+
+  .buttoncontainer {
+    display: flex;
+    justify-content: space-between;
+}
+
+.button {
+    color: #FFFFFF;
+    font-family: Inter, sans-serif;
+    font-size: 22px;
+    background-color: #4C63CA;
+    width: 121px;
+    height: 37px;
+    border-radius: 5px;
+}
+
+.okbutton {
+    /* Position du bouton "OK" */
+    position: absolute;
+    left: 922px;
+    top: 875px;
+}
+
+.cancelbutton {
+    /* Position du bouton "Annuler" */
+    position: absolute;
+    left: 1099px;
+    top: 875px;
+}
