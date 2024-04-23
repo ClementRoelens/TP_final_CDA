@@ -20,7 +20,7 @@ public class AttendanceService implements IBaseService<Attendance> {
     @Autowired
     private AttendanceRepository attendanceRepository;
 
-    public List<Attendance> getAllAttendanceByEmployeeId(UUID idEmployee) {
+    public List<Attendance> getAllAttendanceByEmployeeId(long idEmployee) {
         Employee employee = employeeRepository.findById(idEmployee).orElse(null);
         if (employee != null) {
 
@@ -40,7 +40,7 @@ public class AttendanceService implements IBaseService<Attendance> {
     }
 
     @Override
-    public Attendance getById(UUID id) {
+    public Attendance getById(long id) {
         return attendanceRepository.getById(id);
     }
 
@@ -50,11 +50,11 @@ public class AttendanceService implements IBaseService<Attendance> {
     }
 
     @Override
-    public void deleteById(UUID id) {
+    public void deleteById(long id) {
 
     }
 
-    public String clockIn(UUID employeeId) {
+    public String clockIn(long employeeId) {
         Attendance attendance = new Attendance();
         attendance.setStart(LocalDateTime.now());
         attendance.setId(employeeId); // Utilisation de setId avec l'UUID de l'employé
@@ -63,7 +63,7 @@ public class AttendanceService implements IBaseService<Attendance> {
     }
 
 
-    public String clockOut(UUID employeeId) {
+    public String clockOut(long employeeId) {
         Optional<Attendance> lastAttendance = attendanceRepository.findAllAttendanceById(employeeId);
         if (lastAttendance.isPresent() && lastAttendance.get().getEnd() == null) {
             lastAttendance.get().setEnd(LocalDateTime.now());
@@ -73,7 +73,7 @@ public class AttendanceService implements IBaseService<Attendance> {
             return "No clock in record found for this employee";
         }
     }
-    public Duration calculateOvertime(UUID employeeId) {
+    public Duration calculateOvertime(long employeeId) {
         Optional<Attendance> optionalAttendances = attendanceRepository.findAllAttendanceById(employeeId);
 
         if (optionalAttendances.isPresent()) {

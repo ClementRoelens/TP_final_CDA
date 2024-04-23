@@ -23,7 +23,7 @@ public class AddressService implements IBaseService<Address>{
     }
 
     @Override
-    public Address getById(UUID id) {
+    public Address getById(long id) {
         return addressRepository.getById(id);
     }
 
@@ -33,7 +33,7 @@ public class AddressService implements IBaseService<Address>{
     }
 
     @Override
-    public void deleteById(UUID id) {
+    public void deleteById(long id) {
 
     }
 }

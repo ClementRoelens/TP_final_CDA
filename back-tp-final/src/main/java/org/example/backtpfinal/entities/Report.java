@@ -16,8 +16,8 @@ import java.util.UUID;
 @Builder
 public class Report {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
     private int workedHoursRate;
     private LocalDateTime startDate;
     private LocalDateTime endDate;
@@ -25,13 +25,4 @@ public class Report {
     @ManyToOne
     @JoinColumn(name="employee_id")
     private Employee employee;
-
-
-    public void setId(UUID id) {
-        this.id = id;
-    }
-
-    public UUID getId() {
-        return id;
-    }
 }

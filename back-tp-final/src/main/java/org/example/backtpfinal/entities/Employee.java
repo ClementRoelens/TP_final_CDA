@@ -6,6 +6,7 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Past;
 import lombok.*;
+import org.example.backtpfinal.dto.EmployeeDTO;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.hibernate.annotations.GenericGenerator;
@@ -23,9 +24,8 @@ import java.util.UUID;
 public class Employee implements UserDetails {
 
     @Id
-    @GeneratedValue(generator = "uuid")
-    @GenericGenerator(name = "uuid", strategy = "uuid2")
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
     @NotBlank(message = "Please enter employee firstname")
     private String firstName;
 
@@ -46,24 +46,15 @@ public class Employee implements UserDetails {
     private String role;
     private String photoPath;
     @ManyToOne
-    @JoinColumn(name="adress_id",nullable = false)
+    @JoinColumn(name="address_id",nullable = false)
     private Address address;
 
-    @OneToMany
-            (mappedBy = "employee", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "employee")
     private List<Attendance> attendancesList;
 
-    @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "employee")
     private List<Report> reportList;
 
-
-    public void setId(UUID id) {
-        this.id = id;
-    }
-
-    public UUID getId() {
-        return id;
-    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -93,5 +84,20 @@ public class Employee implements UserDetails {
     @Override
     public boolean isEnabled() {
         return false;
+    }
+
+    public EmployeeDTO toDTO(){
+        return EmployeeDTO.builder()
+                .id(id)
+                .firstName(firstName)
+                .lastName(lastName)
+                .birthDate(birthDate)
+                .gender(gender)
+                .email(email)
+                .pay(pay)
+                .role(role)
+                .photoPath(photoPath)
+                .address(address.toDTO())
+                .build();
     }
 }

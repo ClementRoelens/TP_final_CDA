@@ -14,17 +14,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import jakarta.persistence.EntityNotFoundException;
-import org.example.backtpfinal.entities.Employee;
 import org.example.backtpfinal.exception.EmployeeNotFound;
 import org.example.backtpfinal.repository.AttendanceRepository;
-import org.example.backtpfinal.repository.EmployeeRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
 
 @Service
 public class EmployeeService implements UserDetailsService, IBaseService<Employee> {
@@ -44,18 +36,30 @@ public class EmployeeService implements UserDetailsService, IBaseService<Employe
 
 
     @Override
-    public Employee save(Employee element) {
-        return employeeRepository.save(element);
+    public Employee save(Employee employee) {
+        employee.setPassword(passwordEncoder.encode(employee.getPassword()));
+        employeeRepository.save(employee);
+        return employee;
+    }
+
+    // Pour éviter d'avoir une boucle infinie entre employé et ses attributs
+    private Employee reduceEmployee(Employee employee){
+        employee.getAddress().setEmployeesList(null);
+        employee.getAttendancesList().forEach(a -> a.setEmployee(null));
+        employee.getReportList().forEach(r -> r.setEmployee(null));
+        return employee;
     }
 
     @Override
     public List<Employee> getAll() {
-        return employeeRepository.findAll();
+        return employeeRepository.findAll().stream().map(this::reduceEmployee).toList();
     }
 
     @Override
-    public Employee getById(UUID id) throws EmployeeNotFound {
-        return employeeRepository.findById(id).orElseThrow(() -> new EmployeeNotFound(id));
+    public Employee getById(long id) throws EmployeeNotFound {
+        Employee employee = employeeRepository.findById(id)
+                .orElseThrow(() -> new EmployeeNotFound(id));
+        return reduceEmployee(employee);
     }
 
     @Override
@@ -66,7 +70,7 @@ public class EmployeeService implements UserDetailsService, IBaseService<Employe
 
 
     @Override
-    public void deleteById(UUID id) {
+    public void deleteById(long id) {
 
     }
 
@@ -81,14 +85,7 @@ public class EmployeeService implements UserDetailsService, IBaseService<Employe
     public String generateToken(String email, String password){
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(email, password));
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        String token = tokenProvider.generateToken(authentication);
-        return token;
-    }
-
-    public boolean createEmployee(Employee employee) {
-        employee.setPassword(passwordEncoder.encode(employee.getPassword()));
-        employeeRepository.save(employee);
-        return true;
+        return tokenProvider.generateToken(authentication);
     }
 
 

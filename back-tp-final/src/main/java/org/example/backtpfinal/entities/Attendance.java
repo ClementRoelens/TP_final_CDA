@@ -16,19 +16,12 @@ import java.util.UUID;
 @Builder
 public class Attendance {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
     private LocalDateTime start;
     private LocalDateTime end;
     @ManyToOne
-    @JoinColumn(name="attendance_id")
+    @JoinColumn(name="employee_id")
     private Employee employee;
-    public void setId(UUID id) {
-        this.id = id;
-    }
-
-    public UUID getId() {
-        return id;
-    }
 
 }
