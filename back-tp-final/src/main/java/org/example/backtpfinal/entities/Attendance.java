@@ -1,10 +1,12 @@
 package org.example.backtpfinal.entities;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -15,7 +17,12 @@ public class Attendance {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    @JsonFormat(pattern = "dd-MM-yyyy")
+    @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
     private LocalDateTime start;
+
+    @JsonFormat(pattern = "dd-MM-yyyy")
+    @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
     private LocalDateTime end;
     @ManyToOne
     @JoinColumn(name="attendance_id")

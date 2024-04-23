@@ -78,19 +78,19 @@ public class AttendanceService implements IBaseService<Attendance> {
 
         if (optionalAttendances.isPresent()) {
             List<Attendance> attendances = (List<Attendance>) optionalAttendances.get();
-            Duration totalWorkingHours = Duration.ZERO;
+            Duration dailyWorkingHours = Duration.ZERO;
 
             for (Attendance a : attendances) {
                 LocalDateTime start = a.getStart();
                 LocalDateTime end = a.getEnd();
                 if (end != null) {
-                    totalWorkingHours = totalWorkingHours.plus(Duration.between(start, end));
+                    dailyWorkingHours = dailyWorkingHours.plus(Duration.between(start, end));
                 }
             }
 
             // Suppose que les heures supplémentaires sont toutes les heures travaillées au-delà de la semaine de travail standard (par exemple, 35 heures)
-            Duration standardWorkWeek = Duration.ofHours(35);
-            Duration overtime = totalWorkingHours.minus(standardWorkWeek);
+            Duration standardWeeklyWork = Duration.ofHours(35);
+            Duration overtime = dailyWorkingHours.minus(standardWeeklyWork);
 
             return overtime.isNegative() ? Duration.ZERO : overtime;
         }else {

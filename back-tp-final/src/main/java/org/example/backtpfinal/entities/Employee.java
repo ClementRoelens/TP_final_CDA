@@ -26,7 +26,7 @@ public class Employee {
     private String lastName;
 
     @Past(message = "Birthdate cannot be present or future date")
-    @JsonFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "dd-MM-yyyy")
     private Date birthDate;
 
     private String gender;

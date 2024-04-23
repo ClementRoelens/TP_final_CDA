@@ -10,4 +10,5 @@ public interface AttendanceRepository extends JpaRepository<Attendance, Long> {
 
     Optional<Attendance> findAllAttendanceById(Long id);
 
+
 }
