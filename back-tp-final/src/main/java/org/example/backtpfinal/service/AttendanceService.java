@@ -8,6 +8,7 @@ import org.example.backtpfinal.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Date;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -58,6 +59,12 @@ public class AttendanceService implements IBaseService<Attendance> {
     public void deleteById(Long id) {
 
     }
+    public Optional<Attendance> getAttendanceFromSelectedDate(Date date, Date currDate) {
+        LocalDateTime localDate = date.toLocalDate().atStartOfDay();
+        LocalDateTime localCurrDate = currDate.toLocalDate().atStartOfDay().plusDays(1); // Adjust for inclusive end date
+        return attendanceRepository.getByDate(localDate, localCurrDate);
+    }
+
 
     public String clockIn(Long employeeId) throws EmployeeNotFound {
         Employee employee = employeeRepository.findById(employeeId)
