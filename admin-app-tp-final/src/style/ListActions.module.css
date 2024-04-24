@@ -1,0 +1,9 @@
+.actionsContainer {
+    display:flex;
+    justify-content: space-around;
+}
+
+.actionsContainer button {
+    border:none;
+    border-radius:5px;
+}

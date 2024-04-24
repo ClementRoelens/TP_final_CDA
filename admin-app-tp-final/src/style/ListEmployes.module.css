@@ -1,0 +1,21 @@
+.actions {
+    height:10vh;
+    display:flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.actions button {
+    background-color: white;
+    border:solid 1px var(--black);
+    border-radius: 8px;
+    padding:5px 20px;
+    cursor: pointer;
+}
+
+.actions input,
+.actions input:focus {
+  width:38.19vw;  
+  border-radius: 7px;
+  border: solid 1px var(--black);
+}
