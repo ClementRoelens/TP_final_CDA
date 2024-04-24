@@ -39,7 +39,7 @@ public class Employee {
     private String role;
     private String photoPath;
     @OneToOne
-    @JoinColumn(name="adress_id",nullable = false)
+    @JoinColumn(name="address_id",nullable = false)
     private Address address;
 
     @OneToMany

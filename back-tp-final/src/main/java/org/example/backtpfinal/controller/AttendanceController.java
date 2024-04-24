@@ -11,7 +11,7 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping("/api/attendances")
+@RequestMapping("/api/attendance")
 public class AttendanceController {
     @Autowired
     private  AttendanceService attendanceService;
@@ -21,6 +21,7 @@ public class AttendanceController {
     @PostMapping("/clockIn")
     public ResponseEntity<String> clockIn(@RequestBody Long employeeId) {
         String message = attendanceService.clockIn(employeeId);
+        System.out.println("Hoop in!!!");
         return ResponseEntity.ok(message);
     }
 
@@ -29,5 +30,6 @@ public class AttendanceController {
         String message = attendanceService.clockOut(employeeId);
         return ResponseEntity.ok(message);
     }
+
 
 }

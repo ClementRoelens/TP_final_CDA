@@ -2,6 +2,7 @@ package org.example.backtpfinal.service;
 
 import org.example.backtpfinal.entities.Attendance;
 import org.example.backtpfinal.entities.Employee;
+import org.example.backtpfinal.exception.EmployeeNotFound;
 import org.example.backtpfinal.repository.AttendanceRepository;
 import org.example.backtpfinal.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,10 @@ public class AttendanceService implements IBaseService<Attendance> {
             return employee.getAttendancesList();
         }
         return Collections.emptyList();
+    }
+    public Attendance findLastClockingPoint(Long employeeId) {
+        Optional<Attendance> attendanceOptional = attendanceRepository.findLatestAttendanceByEmployeeId(employeeId);
+        return attendanceOptional.orElse(null);
     }
 
     @Override
@@ -54,47 +59,68 @@ public class AttendanceService implements IBaseService<Attendance> {
 
     }
 
-    public String clockIn(Long employeeId) {
-        Attendance attendance = new Attendance();
-        attendance.setStart(LocalDateTime.now());
-        attendance.setId(employeeId); // Utilisation de setId avec l'Long de l'employé
+    public String clockIn(Long employeeId) throws EmployeeNotFound {
+        Employee employee = employeeRepository.findById(employeeId)
+                .orElseThrow(() -> new EmployeeNotFound(employeeId));
+
+        Attendance attendance =  Attendance.builder()
+                .employee(employee)
+                .start(LocalDateTime.now())
+                .build();
+
         attendanceRepository.save(attendance);
         return "Clock in successful";
     }
 
 
-    public String clockOut(Long employeeId) {
-        Optional<Attendance> lastAttendance = attendanceRepository.findAllAttendanceById(employeeId);
-        if (lastAttendance.isPresent() && lastAttendance.get().getEnd() == null) {
-            lastAttendance.get().setEnd(LocalDateTime.now());
-            attendanceRepository.save(lastAttendance.get());
+    public String clockOut(Long employeeId)throws  EmployeeNotFound, IllegalStateException {
+        Employee employee = employeeRepository.findById(employeeId)
+                .orElseThrow(() -> new EmployeeNotFound(employeeId));
+
+        Optional<Attendance> lastestAttendance = attendanceRepository.findAllAttendanceById(employeeId);
+        if (lastestAttendance.isPresent() && lastestAttendance.get().getEnd() == null) {
+            lastestAttendance.get().setEnd(LocalDateTime.now());
+            attendanceRepository.save(lastestAttendance.get());
             return "Clock out successful";
         } else {
-            return "No clock in record found for this employee";
+            throw new IllegalStateException("Employee with ID " + employeeId + " cannot clock out without clocking in first.");
         }
     }
-    public Duration calculateOvertime(Long employeeId) {
+    public double hoursWorkedDaily(Attendance attendance) {
+        if (attendance.getStart() == null || attendance.getEnd() == null) {
+            throw new IllegalArgumentException("Attendance record must have both start and end times set.");
+        }
+
+        LocalDateTime start = attendance.getStart();
+        LocalDateTime end = attendance.getEnd();
+
+        Duration duration = Duration.between(start, end);
+        double hours = (double) duration.toHours();
+
+        return hours;
+    }
+    public Duration overtimeByWeek(Long employeeId) {
         Optional<Attendance> optionalAttendances = attendanceRepository.findAllAttendanceById(employeeId);
 
         if (optionalAttendances.isPresent()) {
             List<Attendance> attendances = (List<Attendance>) optionalAttendances.get();
-            Duration dailyWorkingHours = Duration.ZERO;
 
-            for (Attendance a : attendances) {
-                LocalDateTime start = a.getStart();
-                LocalDateTime end = a.getEnd();
-                if (end != null) {
-                    dailyWorkingHours = dailyWorkingHours.plus(Duration.between(start, end));
-                }
-            }
+            // Calculate daily working hours for all valid attendances
+            //Converts the List<Attendance> into stream
+            Duration dailyWorkingHours = attendances.stream()
+                    //keeps only  Attendance objects where the end time is not null.
+                    .filter(a -> a.getEnd() != null)
+                    //transforms each Attendance object into a Duration object
+                    .map(a -> Duration.between(a.getStart(), a.getEnd()))
+                    //combines all the Duration objects obtained from the map operation into a single Duration value
+                    .reduce(Duration.ZERO, Duration::plus);
 
-            // Suppose que les heures supplémentaires sont toutes les heures travaillées au-delà de la semaine de travail standard (par exemple, 35 heures)
+            // standard 35 heures
             Duration standardWeeklyWork = Duration.ofHours(35);
             Duration overtime = dailyWorkingHours.minus(standardWeeklyWork);
 
             return overtime.isNegative() ? Duration.ZERO : overtime;
         }else {
-            // Gérer le cas où aucune présence n'est trouvée pour l'employé
             return Duration.ZERO;
         }
     }
