@@ -1,11 +1,16 @@
 import { View, Text, TextInput, StyleSheet } from 'react-native'
 import React from 'react'
 
-const InputAndLabel = ({ label, placeholder, isSecure, refProps }) => {
+const InputAndLabel = ({ label, placeholder, isSecure, stateValueSetter }) => {
     return (
         <View>
             <Text style={styles.text}>{label}</Text>
-            <TextInput placeholderTextColor={"#EBEBEB"} placeholder={placeholder} secureTextEntry={isSecure} style={styles.input} ref={refProps} />
+            <TextInput 
+                placeholderTextColor={"#EBEBEB"} 
+                placeholder={placeholder} 
+                secureTextEntry={isSecure} 
+                style={styles.input} 
+                onChangeText={(text) => stateValueSetter(text)} />
         </View>
     )
 };
@@ -21,6 +26,7 @@ const styles = StyleSheet.create({
         width: 220,
         borderRadius: 12,
         padding: 15,
+        color : "#EBEBEB",
         // Drop shadows à factoriser
         shadowColor: '#000',
         shadowOffset: {
