@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom"
 import { useRef } from "react"
 import { setAuthMode, signInAction, signUpAction } from "./authSlice"
 import image from '../../assets/logo.jpg'
-
+// import styles from '../../style/ConnexionPage.module.css'; 
 // import imageUrl from './assets/logo'
 
 
@@ -22,9 +22,13 @@ const ConnexionPage = () => {
     const buttonProps = {
         heightStyle: "102px",
         widthStyle: "386px",
-        text: authMode === "Se connecter" ? "Réinitialiser" : "Se connecter",
+        text: authMode === "Se connecter" ? "Se connecter" : "Réinitialiser" ,
         onClickAction: () => {
-            dispatch(setAuthMode(authMode === "Se connecter" ? "S'inscrire" : "Se connecter"))
+            if(authMode === "Se connecter") {
+                dispatch(signInAction())
+            } else if(authMode === "Réinitialiser") {
+                dispatch(signUpAction())
+            }
         },
     };
 
@@ -68,8 +72,14 @@ const ConnexionPage = () => {
          navigate('/') /* a adapter */
     }
 
+    const forgetPassword = (event) => {
+        event.preventDefault()
+
+            dispatch(setAuthMode(authMode === "Se connecter" ? "S'inscrire" : "Se connecter"))
+    }
+
   return (
-    <>
+<>
         
         <div>
             <div>
@@ -83,22 +93,23 @@ const ConnexionPage = () => {
         <form onSubmit={submitHandler}>
             <div>
                 <label htmlFor="email" className="form-label">Email: </label>
-                <InputTextArea {... inputEmailProps}></InputTextArea>
+                <InputTextArea ref={emailRef} {... inputEmailProps}></InputTextArea>
             </div>
             <div style={{ display: authMode !== "Se connecter" ? 'none' : 'block' }}>
                 <label htmlFor="password" className="form-label">Mot de passe: </label>
-                <InputTextArea {...inputPasswordProps}></InputTextArea>
+                <InputTextArea ref={passwordRef} {...inputPasswordProps}></InputTextArea>
             </div>
             <div>
                 <Button {...buttonProps}></Button>
             </div>
         </form>
-        <a href="">Mot de passe oublié</a> 
-         {/* a adapter  */}
+        {authMode === "Se connecter" && (
+                    <a href="" onClick={forgetPassword} style={{ display: authMode !== "Se connecter" ? 'none' : 'block' }}>Mot de passe oublié</a> 
+                    /* Adaptation nécessaire */
+                )}
         </div>
-
-
     </>
+
   )
 }
 

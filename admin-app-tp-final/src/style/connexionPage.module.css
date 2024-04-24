@@ -1,0 +1,32 @@
+.pageContainer {
+    display: flex;
+}
+
+.leftSection {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: linear-gradient(to bottom, #535A75 0%, #4C63CA 100%);
+}
+
+.logoContainer {
+    margin-top: 100px; /* Ajustez la marge supérieure selon vos besoins */
+}
+
+.textContainer {
+    margin-top: 300px; /* Ajustez la marge supérieure selon vos besoins */
+    width: 553px;
+    height: 140px;
+    background-color: #FFFFFF;
+    border-radius: 9px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.text {
+    font-size: 24px;
+    font-family: Inter, sans-serif;
+    color: black;
+}

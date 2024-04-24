@@ -11,45 +11,45 @@ import App from "./App";
 
 
 const router = createBrowserRouter([
-    // {
-    //     path : "/",
-    //     element : <App />,
-    //     children : [
-    //         {
-    //             path : "/",
-    //             element : <ConnexionPage />
-    //         },
-    //         {
-    //             path : "/form",
-    //             element :<ProtectedRoute><FormAddEmployee /></ProtectedRoute> 
-    //         },
-    //         {
-    //             path : "/forgotPassword",
-    //             element : <ForgotPasswordPage />
-    //         },
-    //         {
-    //             path : "/listEmployee",
-    //             element : <ProtectedRoute><ListEmployeePage /></ProtectedRoute>
-    //         },
-    //         {
-    //             path : "/employeeDetails",
-    //             element : <ProtectedRoute><EmployeeDetailsPage /></ProtectedRoute>
-    //         }
-    //     ]
-    // }
-
     {
         path : "/",
-        element : <ConnexionPage />
-    },
-    {
-        path : "/form",
-        element : <FormAddEmployee />
-    },
-    {
-        path : "/listEmployee",
-        element : <ListEmployeePage />
-    },
+        element : <App />,
+        children : [
+            {
+                path : "/",
+                element : <ConnexionPage />
+            },
+            {
+                path : "/form",
+                element :<ProtectedRoute><FormAddEmployee /></ProtectedRoute> 
+            },
+            {
+                path : "/forgotPassword",
+                element : <ForgotPasswordPage />
+            },
+            {
+                path : "/listEmployee",
+                element : <ProtectedRoute><ListEmployeePage /></ProtectedRoute>
+            },
+            {
+                path : "/employeeDetails",
+                element : <ProtectedRoute><EmployeeDetailsPage /></ProtectedRoute>
+            }
+        ]
+    }
+
+    // {
+    //     path : "/",
+    //     element : <ConnexionPage />
+    // },
+    // {
+    //     path : "/form",
+    //     element : <FormAddEmployee />
+    // },
+    // {
+    //     path : "/listEmployee",
+    //     element : <ListEmployeePage />
+    // },
     
 ])
 
