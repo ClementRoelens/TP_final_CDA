@@ -1,32 +1,23 @@
-import { Image, StyleSheet ,Text} from 'react-native'
+import {StyleSheet ,Text} from 'react-native'
 import React from 'react'
 import LinearGradient from 'react-native-linear-gradient';
 
-const WelcomeHeaderComponent = () => {
+const HeaderInformationComponent = () => {
     return (
         <LinearGradient colors={['#5764A0', '#535A75']} style={styles.background}>
             <Text style={styles.welcome}>Bienvenue </Text>
             {/* <Text>{employee.firstName + " " + employee.lastName}</Text> */}
             <Text style={styles.name}>Truc Muche</Text>
-            <Image source={require("../assets/basicPhoto.jpg")} style={styles.photo} />
         </LinearGradient>
     )
 }
 
 const styles = StyleSheet.create({
     background: {
-        height:297,
+        height:185,
         display:"flex",
         justifyContent: "center",
         alignItems:"center"
-    },
-    photo: {
-        width: 150,
-        height: 150,
-        borderRadius: 75, 
-        overflow: "hidden" ,
-        position: "absolute",
-        top: 135
     },
     welcome: {
         position: "absolute",
@@ -44,4 +35,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default WelcomeHeaderComponent
+export default HeaderInformationComponent

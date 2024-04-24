@@ -12,7 +12,6 @@ const Home = ({navigation}) => {
   const [passwordValue,setPasswordValue] = useState("");
   const [isFailed, setIsFailed] = useState(false);
 
-
   async function onSignin(){
     if (emailValue !== "" && passwordValue !== ""){
       const result = await dispatch(signin({
