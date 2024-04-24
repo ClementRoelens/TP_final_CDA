@@ -1,32 +1,71 @@
 .pageContainer {
-    display: flex;
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    height: 100vh;
 }
 
 .leftSection {
-    flex: 1;
+    padding : 9.86vh 10.8vw 0 10.8vw;
+    flex: 1; 
     display: flex;
     flex-direction: column;
-    align-items: center;
-    background: linear-gradient(to bottom, #535A75 0%, #4C63CA 100%);
+    align-items: center; 
+    gap:12.4vh;
+    background: linear-gradient(to bottom, var(--grey) 0%, var(--intense) 100%);
 }
 
-.logoContainer {
-    margin-top: 100px; /* Ajustez la marge supérieure selon vos besoins */
+.heroText {
+    color:var(--white);
+    font-size: 1.7em;
+    line-height: 1.5em;
+    font-family: var(--font-sans-serif);
 }
 
 .textContainer {
     margin-top: 300px; /* Ajustez la marge supérieure selon vos besoins */
     width: 553px;
     height: 140px;
-    background-color: #FFFFFF;
+    background-color: var(--white);
     border-radius: 9px;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.text {
-    font-size: 24px;
-    font-family: Inter, sans-serif;
-    color: black;
+.rightSection {
+    display:flex;
+    flex:1;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap:2em;
 }
+
+.inputArea {
+    display:flex;
+    flex-direction: column;
+    gap: 1em;
+}
+
+.inputArea input,
+.inputArea input:-webkit-autofill,
+.inputArea input:-webkit-autofill:active,
+.inputArea input:-webkit-autofill::first-line,
+.inputArea input:focus {
+    background-color: var(--fade) !important;
+    -webkit-box-shadow: 0 0 0 1000px var(--fade) inset;
+    -webkit-text-fill-color: var(--white);
+    outline:none !important;
+    color : var(--white) !important;
+    font-size: 1em !important;    
+}
+
+.plainButton {
+    border:none;
+    background-color: transparent;
+    cursor: pointer;
+    color:var(--black);
+}
+
+
+

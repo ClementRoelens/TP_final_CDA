@@ -1,23 +1,34 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { getAuthorizationHeadersValue } from "../../helpers/jwtHeadersProvider";
 
-const API_Employee = "http://localhost:8080"
+const API_Employee = "http://localhost:8090/api/employees"
+
+async function getEmployee(email){
+  const response = await fetch(`${API_Employee}/byMail/${email}`, {
+    method : "GET",
+    headers : {
+      "Authorization" : getAuthorizationHeadersValue(),
+      "Content-Type" : "application/json"
+    }
+  });
+
+  return await response.json();
+}
 
 export const signInAction = createAsyncThunk(
     "auth/signInAction",
     async (credentials) => {
-        const response = await fetch(API_Employee, {
-            method: "Post",
+        const response = await fetch(`${API_Employee}/signin`, {
+            method: "POST",
             headers: {
-                "Content-Type": "????"
+                "Content-Type": "application/json"
             },
             body: JSON.stringify(credentials)
-        })
-        if (!response.ok) {
-            throw new Error("Something went wrong when Signing in...")
-          }
-          const data = await response.json()
+        });
 
-          return data
+          const jwt = await response.text()
+          localStorage.setItem("token",jwt);
+          return await getEmployee(credentials.email);
     }
 )
 
@@ -27,14 +38,10 @@ export const signUpAction = createAsyncThunk(
       const response = await fetch(API_Employee, {
         method: "POST",
         headers: {
-          "Content-Type": "?????"
+          "Content-Type": "application/json"
         },
         body: JSON.stringify(credentials)
       })
-  
-      if (!response.ok) {
-        throw new Error("Something went wrong when Signing up...")
-      }
   
       const data = await response.json()
   
@@ -59,12 +66,17 @@ export const signUpAction = createAsyncThunk(
     },
     extraReducers: (builder) => {
         builder.addCase(signInAction.fulfilled, (state, action) => {
-            state.user = action.payload
-            localStorage.setItem('token', action.payload.idToken)
-        })
-        builder.addCase(signUpAction.fulfilled, (state,action) => {
-            state.user = action.payload
-            localStorage.setItem('token', action.payload.idToken)
+          console.log(action.payload)
+            state.user = action.payload;
+        }),
+        builder.addCase(signInAction.rejected, (state,action) => {
+          console.error(action.error);
+        }),
+        builder.addCase(signUpAction.fulfilled, () => {
+            console.log("inscription réussie");
+        }),   
+        builder.addCase(signUpAction.rejected, (state,action) => {
+          console.error(action.error);
         })
     }
   })
