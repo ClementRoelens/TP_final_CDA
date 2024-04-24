@@ -36,12 +36,12 @@ public class AttendanceController {
         System.out.println("Hoop out!!! " + endTime);
         return ResponseEntity.ok(endTime);
     }
-    @GetMapping("/getHours/{id}")
+   /* @GetMapping("/getHours/{id}")
     public ResponseEntity<Double> getHoursWorked(@PathVariable Long id) throws IllegalArgumentException{
-        Attendance attendance = (Attendance) attendanceService.getAttendanceFromSelectedDate(d);
+        Attendance attendance = (Attendance) attendanceService.getAttendanceFromSelectedDate();
         double hours = attendanceService.hoursWorkedDaily(attendance);
         return ResponseEntity.ok(hours);
     }
-
+*/
 
 }
