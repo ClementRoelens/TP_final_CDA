@@ -1,11 +1,11 @@
 import { View, Text, TextInput, StyleSheet } from 'react-native'
 import React from 'react'
 
-const InputAndLabel = ({ label, placeholder, isSecure }) => {
+const InputAndLabel = ({ label, placeholder, isSecure, refProps }) => {
     return (
         <View>
             <Text style={styles.text}>{label}</Text>
-            <TextInput placeholderTextColor={"#EBEBEB"} placeholder={placeholder} secureTextEntry={isSecure} style={styles.input} />
+            <TextInput placeholderTextColor={"#EBEBEB"} placeholder={placeholder} secureTextEntry={isSecure} style={styles.input} ref={refProps} />
         </View>
     )
 };
