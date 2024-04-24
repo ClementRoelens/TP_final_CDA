@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom"
 import { useRef } from "react"
 import { setAuthMode, signInAction, signUpAction } from "./authSlice"
 import image from '../../assets/logo.jpg'
-
+// import styles from '../../style/ConnexionPage.module.css'; 
 // import imageUrl from './assets/logo'
 
 
@@ -79,7 +79,7 @@ const ConnexionPage = () => {
     }
 
   return (
-    <>
+<>
         
         <div>
             <div>
@@ -109,6 +109,7 @@ const ConnexionPage = () => {
                 )}
         </div>
     </>
+
   )
 }
 
