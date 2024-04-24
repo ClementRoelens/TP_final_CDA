@@ -14,11 +14,14 @@ import java.util.UUID;
 
 
 @Entity
+@Builder
+@ToString
 public class Employee {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
     @NotBlank(message = "Please enter employee firstname")
     private String firstName;
 

@@ -1,5 +1,6 @@
 package org.example.backtpfinal.service;
 
+
 import org.example.backtpfinal.entities.Attendance;
 import org.example.backtpfinal.entities.Employee;
 import org.example.backtpfinal.exception.EmployeeNotFound;
@@ -21,6 +22,7 @@ public class AttendanceService implements IBaseService<Attendance> {
 
     @Autowired
     private AttendanceRepository attendanceRepository;
+
 
     public List<Attendance> getAllAttendanceByEmployeeId(Long idEmployee) {
         Employee employee = employeeRepository.findEmployeeById(idEmployee);
@@ -66,7 +68,7 @@ public class AttendanceService implements IBaseService<Attendance> {
     }
 
 
-    public String clockIn(Long employeeId) throws EmployeeNotFound {
+    public LocalDateTime clockIn(Long employeeId, LocalDateTime clockInTime) throws EmployeeNotFound {
         Employee employee = employeeRepository.findById(employeeId)
                 .orElseThrow(() -> new EmployeeNotFound(employeeId));
 
@@ -76,23 +78,26 @@ public class AttendanceService implements IBaseService<Attendance> {
                 .build();
 
         attendanceRepository.save(attendance);
-        return "Clock in successful";
+        return attendance.getStart();
     }
 
 
-    public String clockOut(Long employeeId)throws  EmployeeNotFound, IllegalStateException {
+    public LocalDateTime clockOut(Long employeeId, LocalDateTime clockOutTime) throws EmployeeNotFound {
         Employee employee = employeeRepository.findById(employeeId)
                 .orElseThrow(() -> new EmployeeNotFound(employeeId));
 
-        Optional<Attendance> lastestAttendance = attendanceRepository.findAllAttendanceById(employeeId);
-        if (lastestAttendance.isPresent() && lastestAttendance.get().getEnd() == null) {
-            lastestAttendance.get().setEnd(LocalDateTime.now());
-            attendanceRepository.save(lastestAttendance.get());
-            return "Clock out successful";
+        Optional<Attendance> latestAttendanceOptional = attendanceRepository.findLatestAttendanceByEmployeeId(employeeId);
+        if (latestAttendanceOptional.isPresent()) {
+            Attendance latestAttendance = latestAttendanceOptional.get();
+            latestAttendance.setEnd(LocalDateTime.now());
+            attendanceRepository.save(latestAttendance);
+            return latestAttendance.getEnd();
         } else {
-            throw new IllegalStateException("Employee with ID " + employeeId + " cannot clock out without clocking in first.");
+            System.out.println("Employee with ID " + employeeId + " cannot clock out without clocking in first.");
+            throw new IllegalArgumentException("No attendance found for employee ID: " + employeeId);
         }
     }
+
     public double hoursWorkedDaily(Attendance attendance) {
         if (attendance.getStart() == null || attendance.getEnd() == null) {
             throw new IllegalArgumentException("Attendance record must have both start and end times set.");

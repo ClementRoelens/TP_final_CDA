@@ -35,12 +35,8 @@ public class EmployeeController {
 
     @PostMapping("/add")
     public ResponseEntity<Employee> createEmployee(@RequestBody @Valid EmployeeDTO employeeDTO) throws EmployeeNotFound{
-        Employee employee = modelMapper.map(employeeDTO, Employee.class);
-       /* Employee employee = new Employee();
-        employee.setFirstName(employeeDTO.getFirstName());
-        employee.setLastName(employeeDTO.getLastName());
-        // Continuer avec les autres attributs...*/
-        Employee newEmployee = employeeService.save(employee);
+        Employee newEmployee = employeeService.save(employeeDTO);
+        System.out.println("add employee");
         return ResponseEntity.ok(newEmployee);
     }
     @GetMapping("/{id}")

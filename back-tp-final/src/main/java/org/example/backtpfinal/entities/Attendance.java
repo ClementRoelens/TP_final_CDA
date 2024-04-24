@@ -25,7 +25,7 @@ public class Attendance {
     @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
     private LocalDateTime end;
     @ManyToOne
-    @JoinColumn(name="attendance_id")
+    @JoinColumn(name="employee_id")
     private Employee employee;
 
     public Attendance() {

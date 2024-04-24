@@ -23,7 +23,7 @@ public class AddressController {
     @PostMapping("/add")
     public ResponseEntity<Address> addNewAddress (@RequestBody AddressDTO dto){
         Address newAddress = addressService.save(dto);
-        System.out.println("add");
+        System.out.println("add address");
         return new ResponseEntity<>(newAddress, HttpStatus.CREATED);
 
     }

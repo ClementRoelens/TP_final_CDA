@@ -16,9 +16,9 @@ import java.util.Optional;
 
 @Repository
 public interface AttendanceRepository extends JpaRepository<Attendance, Long> {
-    @Modifying
-    @Query("SELECT a FROM Attendance a WHERE a.employee.id = :employeeId")
-    Optional<Attendance> findAllAttendanceById(@Param("employeeId") Long employeeId);
+
+
+    Optional<Attendance> findAllAttendanceById(Long employeeId);
 
 
 
