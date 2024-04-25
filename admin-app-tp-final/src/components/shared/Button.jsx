@@ -6,10 +6,13 @@ const Button = (props) => {
         width: widthStyle,
         backgroundColor : "#4C63CA",
         borderRadius: "7px",
-        color: "#FFFFFF", 
-        fontFamily: "Inter", 
+        color: "var(--white)", 
+        fontFamily: "var(--font-sans-serif)", 
+        fontSize:"1.5em",
         fontWeight: "medium", 
         textAlign: "center", 
+        border:"none",
+        cursor:"pointer"
     };
 
     return(
