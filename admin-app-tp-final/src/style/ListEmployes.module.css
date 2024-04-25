@@ -1,8 +1,14 @@
+.container {
+  display:flex;
+  flex-direction: column;
+}
+
 .actions {
     height:10vh;
     display:flex;
     justify-content: space-around;
     align-items: center;
+    margin:10px 0;
 }
 
 .actions button {
@@ -25,15 +31,28 @@
 
 .table {
   margin:auto 30px;
-  background-color: var(--moderate);
-  width: 100%;
+  background-color: var(--grey);
   border-radius: 8px;
   border: solid 1px var(--black);
   text-align: center;
-  color:var(--black);
+  color:var(--white);
+  border-collapse: collapse;
 }
 
-.th {
+.thead {
+  border-bottom: solid 1px var(--black);
+  height:30px;
+}
+
+.add {
+  background-color: var(--intense);
+  border:none;
   color:var(--white);
+  font-size: 1.1em;
+  padding:10px 20px;
+  border-radius: 10px;
+  display:block;
+  margin: 15px auto;
+  cursor:pointer;
 }
 

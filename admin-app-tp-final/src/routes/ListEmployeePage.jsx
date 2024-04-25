@@ -7,7 +7,7 @@ const ListEmployeePage = () => {
     return (
         <>
         <Header />
-        <div>
+        <div className={styles.container}>
             <div className={styles.actions}>
                 <input type="text" />
                 <button>Filtrer</button>
@@ -15,12 +15,12 @@ const ListEmployeePage = () => {
             </div>
             <table className={styles.table}>
                 <thead>
-                    <tr>
-                        <th></th>
-                        <th className={styles.th}>Nom</th>
-                        <th className={styles.th}>Prénom</th>
-                        <th className={styles.th}>Présence</th>
-                        <th className={styles.th}>Actions</th>
+                    <tr className={styles.thead}>
+                        <th className={styles.thead}></th>
+                        <th className={styles.thead}>Nom</th>
+                        <th className={styles.thead}>Prénom</th>
+                        <th className={styles.thead}>Présence</th>
+                        <th className={styles.thead}>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -47,7 +47,7 @@ const ListEmployeePage = () => {
                     </tr>
                 </tbody>
             </table>
-            <button>Ajouter</button>
+            <button className={styles.add}>Ajouter</button>
         </div>
         </>
     )
