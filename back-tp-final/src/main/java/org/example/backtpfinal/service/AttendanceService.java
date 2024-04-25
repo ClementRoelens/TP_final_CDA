@@ -9,8 +9,8 @@ import org.example.backtpfinal.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.sql.Date;
 import java.time.Duration;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -22,6 +22,7 @@ public class AttendanceService implements IBaseService<Attendance> {
 
     @Autowired
     private AttendanceRepository attendanceRepository;
+
 
 
     public List<Attendance> getAllAttendanceByEmployeeId(Long idEmployee) {
@@ -61,11 +62,11 @@ public class AttendanceService implements IBaseService<Attendance> {
     public void deleteById(Long id) {
 
     }
-    public Optional<Attendance> getAttendanceFromSelectedDate(Date date, Date currDate) {
-        LocalDateTime localDate = date.toLocalDate().atStartOfDay();
-        LocalDateTime localCurrDate = currDate.toLocalDate().atStartOfDay().plusDays(1); // Adjust for inclusive end date
-        return attendanceRepository.getByDate(localDate, localCurrDate);
-    }
+    /*public List<Attendance> getAttendanceFromSelectedDate(Date date, Date currDate, Employee e) {
+        LocalDateTime localDate = date.toLocalDate().atStartOfDay();// 00:00:00.
+        LocalDateTime localCurrDate = currDate.toLocalDate().atStartOfDay().plusDays(1);
+        return attendanceRepository.getAttendanceByDay(localDate, localCurrDate, e);
+    }*/
 
 
     public LocalDateTime clockIn(Long employeeId, LocalDateTime clockInTime) throws EmployeeNotFound {
@@ -98,21 +99,30 @@ public class AttendanceService implements IBaseService<Attendance> {
         }
     }
 
-    public double hoursWorkedDaily(Attendance attendance) {
-        if (attendance.getStart() == null || attendance.getEnd() == null) {
-            throw new IllegalArgumentException("Attendance record must have both start and end times set.");
+    public double calculateHoursWorkedByEmployeeForDay(LocalDate date, Employee e) {
+        LocalDateTime startDate = date.atStartOfDay();
+        LocalDateTime endDate = startDate.withHour(23).withMinute(59).withSecond(59);
+
+        List<Attendance> attendances = this.attendanceRepository.getAttendanceByDay(startDate, endDate, e);
+
+        Duration totalWorkingDuration = Duration.ZERO;
+        for (Attendance attendance : attendances) {
+            LocalDateTime clockIn = attendance.getStart();
+            LocalDateTime clockOut = attendance.getEnd();
+
+            if (clockIn != null && clockOut != null) {
+                Duration attendanceDuration = Duration.between(clockIn, clockOut);
+                totalWorkingDuration = totalWorkingDuration.plus(attendanceDuration);
+            }
         }
 
-        LocalDateTime start = attendance.getStart();
-        LocalDateTime end = attendance.getEnd();
-
-        Duration duration = Duration.between(start, end);
-        double hours = (double) duration.toHours();
-
-        return hours;
+        //convert in hour
+        double totalWorkingHours = totalWorkingDuration.toMinutes() / 60.0;
+        return totalWorkingHours;
     }
+
     public Duration overtimeByWeek(Long employeeId) {
-        Optional<Attendance> optionalAttendances = attendanceRepository.findAllAttendanceById(employeeId);
+        Optional<List<Attendance>> optionalAttendances = attendanceRepository.findAllAttendanceById(employeeId);
 
         if (optionalAttendances.isPresent()) {
             List<Attendance> attendances = (List<Attendance>) optionalAttendances.get();
@@ -135,5 +145,21 @@ public class AttendanceService implements IBaseService<Attendance> {
         }else {
             return Duration.ZERO;
         }
+    }
+    public Duration calculateHoursWorkedByEmployeeForWeek(LocalDateTime startDate, LocalDateTime endDate, Employee employee) {
+         // between 2 dates definite
+        List<Attendance> attendances = attendanceRepository.getAttendanceByEmployeeByWeek(employee, startDate, endDate);
+
+        Duration totalWorkingDuration = Duration.ZERO;
+        for (Attendance attendance : attendances) {
+            LocalDateTime clockIn = attendance.getStart();
+            LocalDateTime clockOut = attendance.getEnd();
+            if (attendance.getStart() != null && attendance.getEnd() != null) {
+                Duration attendanceDuration = Duration.between(clockIn,clockOut);
+                totalWorkingDuration = totalWorkingDuration.plus(attendanceDuration);
+            }
+        }
+
+        return totalWorkingDuration;
     }
 }

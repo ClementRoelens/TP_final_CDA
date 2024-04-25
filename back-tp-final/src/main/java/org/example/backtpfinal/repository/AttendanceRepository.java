@@ -18,17 +18,21 @@ import java.util.Optional;
 public interface AttendanceRepository extends JpaRepository<Attendance, Long> {
 
 
-    Optional<Attendance> findAllAttendanceById(Long employeeId);
+    Optional<List<Attendance>> findAllAttendanceById(Long employeeId);
+
 
 
 
     @Query("SELECT a FROM Attendance a WHERE a.employee.id = :employeeId ORDER BY a.start DESC LIMIT 1")
     Optional<Attendance> findLatestAttendanceByEmployeeId(@Param("employeeId") Long employeeId);
 
-    @Query("SELECT a FROM Attendance a WHERE a.start >= :date AND a.start < :currDate ORDER BY a.start ASC")
-    Optional<Attendance> getByDate(@Param("date") LocalDateTime date, @Param("currDate") LocalDateTime currDate);
 
 
+    @Query("SELECT a FROM Attendance a WHERE a.start >= :startDate AND a.start < :endDate AND a.employee = :employee")
+    List<Attendance> getAttendanceByDay(@Param("startDate") LocalDateTime startDate, @Param("endDate") LocalDateTime endDate, @Param("employee") Employee employee);
+
+    @Query("SELECT a FROM Attendance a WHERE a.employee = ?1 AND a.start BETWEEN ?2 AND ?3")
+    List<Attendance> getAttendanceByEmployeeByWeek(Employee employee, LocalDateTime startDate, LocalDateTime endDate);
 
 
 
