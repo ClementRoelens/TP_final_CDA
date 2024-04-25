@@ -98,26 +98,7 @@ public class AttendanceService implements IBaseService<Attendance> {
         }
     }
 
-    /*public double calculateHoursWorkedByEmployeeForDay(LocalDate date, Employee e) {
-        LocalDateTime startDate = date.atStartOfDay();
-        LocalDateTime endDate = startDate.withHour(23).withMinute(59).withSecond(59);
-        List<Attendance> attendances = this.attendanceRepository.getAttendanceByDay(startDate, endDate, e);
 
-        Duration totalWorkingDuration = Duration.ZERO;
-        for (Attendance attendance : attendances) {
-            LocalDateTime clockIn = attendance.getStart();
-            LocalDateTime clockOut = attendance.getEnd();
-
-            if (clockIn != null && clockOut != null) {
-                Duration attendanceDuration = Duration.between(clockIn, clockOut);
-                totalWorkingDuration = totalWorkingDuration.plus(attendanceDuration);
-            }
-        }
-
-        //convert in hour
-        double totalWorkingHours = totalWorkingDuration.toMinutes() / 60.0;
-        return totalWorkingHours;
-    }*/
     public double calculateHoursWorkedByEmployeeForDay(LocalDate date, Long employeeId) {
         // Recherche de l'employé par son ID
         Employee employee = employeeRepository.findById(employeeId)

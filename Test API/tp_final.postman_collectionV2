@@ -1,0 +1,242 @@
+{
+	"info": {
+		"_postman_id": "123744f0-a5a3-4d0c-aa70-2a46ad744327",
+		"name": "tp_final",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "32782445"
+	},
+	"item": [
+		{
+			"name": "get",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": ""
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get address by id",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n \r\n    \"name\": \"Nord\",\r\n    \"location\": \"Lomme\",\r\n    \"employees\": 1\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8090/api/address/101",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"api",
+						"address",
+						"101"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "post clock in",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": 1\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "text"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8090/api/attendance/clockIn",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"api",
+						"attendance",
+						"clockIn"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "post clock out",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": 1\r\n}  \r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8090/api/attendance/clockOut",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"api",
+						"attendance",
+						"clockOut"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get hours A DAY",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8090/api/attendance/hours-day/1?date=2024-04-26",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"api",
+						"attendance",
+						"hours-day",
+						"1"
+					],
+					"query": [
+						{
+							"key": "date",
+							"value": "2024-04-26"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get hours A week",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8090/api/attendance/week/1?startDate=2024-04-24&endDate=2024-04-30",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"api",
+						"attendance",
+						"week",
+						"1"
+					],
+					"query": [
+						{
+							"key": "startDate",
+							"value": "2024-04-24"
+						},
+						{
+							"key": "endDate",
+							"value": "2024-04-30"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get overtime",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8090/api/attendance/overtime/1?startDate=2024-04-24&endDate=2024-04-30",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"api",
+						"attendance",
+						"overtime",
+						"1"
+					],
+					"query": [
+						{
+							"key": "startDate",
+							"value": "2024-04-24"
+						},
+						{
+							"key": "endDate",
+							"value": "2024-04-30"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
