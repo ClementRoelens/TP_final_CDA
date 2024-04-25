@@ -1,18 +1,28 @@
 import { View, Text ,ScrollView,StyleSheet,Pressable} from 'react-native'
-import React from 'react'
+import React, { useEffect } from 'react'
 import Button from '../components/Button'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import WelcomeHeaderComponent from '../components/WelcomeHeaderComponent';
+import { clockIn, clockOut, getInitialClockInFromDatabase } from '../components/attendanceSlice';
 
 const EmployeeScreen = ({navigation}) => {
+  const dispatch = useDispatch();
     const employee = useSelector(state => state.employee.employee);
+    const attendance = useSelector(state => state.attendance.clockIn)
 
-    // async function schedule() {
-    //   navigation.navigate('WeeklyInformationScreen')
-    // }
+    useEffect(() => {
+      if (employee != null){
+        dispatch(getInitialClockInFromDatabase());
+      }
+    },[employee])
     
-    async function stamp() {
-      
+    async function clock() {
+      console.log(attendance);
+      if(attendance === null) {
+        dispatch(clockIn(Date.now()))
+      } else {
+        dispatch(clockOut(Date.now()))
+      }
     }
 
   return (
@@ -23,7 +33,7 @@ const EmployeeScreen = ({navigation}) => {
     onPressAction={() => navigation.navigate('WeeklyInformation')}/>
     
     <Button text={"Pointer"} heightStyle={"largeHeight"} 
-    onPressAction={() => stamp()}/>
+    onPressAction={() => clock()}/>
    
     <Pressable style={styles.mistake}>
             <Text style={styles.pressableText}>J'ai fait une erreur</Text>

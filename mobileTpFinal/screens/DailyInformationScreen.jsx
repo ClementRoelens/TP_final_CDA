@@ -1,10 +1,12 @@
 import { ScrollView, Text } from "react-native"
 import HeaderInformationComponent from "../components/HeaderInformationComponent"
 import Button from "../components/Button"
+import { useSelector } from 'react-redux'
 
 
 
 const DailyInformationScreen = ({navigation}) => {
+    const employee = useSelector(state => state.employee.employee);
 
 
 

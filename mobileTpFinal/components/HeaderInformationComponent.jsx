@@ -1,13 +1,17 @@
 import {StyleSheet ,Text} from 'react-native'
 import React from 'react'
 import LinearGradient from 'react-native-linear-gradient';
+import { useSelector } from 'react-redux'
+
 
 const HeaderInformationComponent = () => {
+    const employee = useSelector(state => state.employee.employee);
+
+
     return (
         <LinearGradient colors={['#5764A0', '#535A75']} style={styles.background}>
             <Text style={styles.welcome}>Bienvenue </Text>
-            {/* <Text>{employee.firstName + " " + employee.lastName}</Text> */}
-            <Text style={styles.name}>Truc Muche</Text>
+            <Text style={styles.name}>{employee.firstName + " " + employee.lastName}</Text>
         </LinearGradient>
     )
 }

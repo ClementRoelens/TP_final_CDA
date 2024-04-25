@@ -1,14 +1,18 @@
 import { Image, StyleSheet ,Text} from 'react-native'
 import React from 'react'
 import LinearGradient from 'react-native-linear-gradient';
+import { useSelector } from 'react-redux'
 
-const WelcomeHeaderComponent = () => {
+
+
+const WelcomeHeaderComponent = (props) => {
+    const employee = useSelector(state => state.employee.employee);
+
     return (
         <LinearGradient colors={['#5764A0', '#535A75']} style={styles.background}>
             <Text style={styles.welcome}>Bienvenue </Text>
-            {/* <Text>{employee.firstName + " " + employee.lastName}</Text> */}
-            <Text style={styles.name}>Truc Muche</Text>
-            <Image source={require("../assets/basicPhoto.jpg")} style={styles.photo} />
+            <Text style={styles.name}>{employee.firstName + " " + employee.lastName}</Text>
+            <Image source={employee.photoPath} style={styles.photo} />
         </LinearGradient>
     )
 }
