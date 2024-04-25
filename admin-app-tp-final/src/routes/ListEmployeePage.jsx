@@ -34,11 +34,11 @@ const ListEmployeePage = () => {
                     </thead>
                     <tbody>
                         {employees.map((employee, index) => 
-                            <tr>
+                            <tr key={employee.id}>
                                 <td>{index}</td>
                                 <td>{employee.lastName}</td>
                                 <td>{employee.firstName}</td>
-                                <td>PRÉSENT</td>
+                                <td>{employee.isPresent ? "PRÉSENT" : "ABSENT"}</td>
                                 <td><ListActions /></td>
                             </tr>
                         )}

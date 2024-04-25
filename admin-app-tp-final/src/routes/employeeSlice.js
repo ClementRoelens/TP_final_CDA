@@ -10,7 +10,9 @@ async function addAttendanceToEmployee(employee){
       }
     });
     const attendance = await response.text();
-    return (attendance === "Présent");
+    console.log(employee.firstName + " : " + attendance)
+    employee.isPresent = (attendance === "Présent");
+    return employee;
 }
 
 export const fetchEmployeesAction = createAsyncThunk(
@@ -24,10 +26,9 @@ export const fetchEmployeesAction = createAsyncThunk(
 
     const employees = await response.json();
     
-    employees.map(async employee => {
-      const e = await addAttendanceToEmployee(employee)
-      return e;
-    });
+    for (const employee of employees) {
+      await addAttendanceToEmployee(employee);
+    }
 
     return employees;
   }
