@@ -7,20 +7,20 @@ const ListEmployeePage = () => {
     return (
         <>
         <Header />
-        <div className="container">
+        <div>
             <div className={styles.actions}>
                 <input type="text" />
                 <button>Filtrer</button>
                 <button>Trier</button>
             </div>
-            <table>
+            <table className={styles.table}>
                 <thead>
                     <tr>
-                        <th>#</th>
-                        <th>Nom</th>
-                        <th>Prénom</th>
-                        <th>Présence</th>
-                        <th>Actions</th>
+                        <th></th>
+                        <th className={styles.th}>Nom</th>
+                        <th className={styles.th}>Prénom</th>
+                        <th className={styles.th}>Présence</th>
+                        <th className={styles.th}>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
