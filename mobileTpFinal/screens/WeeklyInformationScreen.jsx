@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, Button, Modal } from 'react-native';
 import CalendarButton from '../components/CalendarButton';
-import HeaderInformationComponent from '../components/WelcomeHeaderComponent';
+import HeaderInformationComponent from '../components/HeaderInformationComponent';
 
 const WeeklyInformationScreen = ({navigation}) => {
     const [isModalVisible, setModalVisible] = useState(false);
@@ -11,10 +11,10 @@ const WeeklyInformationScreen = ({navigation}) => {
     };
 
     return (
-<View >
+<View  style={styles.mainContainer}>
       <HeaderInformationComponent/>
-        {/* <View > */}
-            <ScrollView horizontal={true}>
+        <View >
+            <ScrollView horizontal={true} >
                 <View style={styles.card}>
                     <Text style={styles.cardText}>Card 1</Text>
                 </View>
@@ -24,12 +24,12 @@ const WeeklyInformationScreen = ({navigation}) => {
                 <View style={styles.card}>
                     <Text style={styles.cardText}>Card 3</Text>
                 </View>
-            </ScrollView>
+            </ScrollView >
             <Text style={styles.overtimeText}>
                 Exédent : {/* Ajoutez la logique pour afficher l'excédent ici */}
             </Text>
             <View style={styles.date}>
-                <Button title={"Ouvrir le calendrier"} onPress={toggleModal} style={styles.dateButton} />
+                <Button title={"Ouvrir le calendrier"} onPress={toggleModal} style={styles.calendarButton} />
             </View>
             <Modal
                 animationType="slide"
@@ -44,15 +44,19 @@ const WeeklyInformationScreen = ({navigation}) => {
                     </View>
                 </View>
             </Modal>
-        {/* </View> */}
+        </View>
 </View>
         
     );
 }
 
 const styles = StyleSheet.create({
+    mainContainer :{
+        flex:1
+   },
+
     container: {
-        flex: 1,
+
         alignItems: 'center',
         justifyContent: 'center',
     },
@@ -72,7 +76,7 @@ const styles = StyleSheet.create({
         color: 'white',
     },
     overtimeText: {
-        top: 30,
+        top: 0,
         textAlign: 'center',
         fontSize: 23,
         fontWeight: 'regular',
@@ -103,6 +107,20 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         elevation: 5,
     },
+    calendarButton: {
+        height: 72,
+        width: 287,
+        backgroundColor : "#4C63CA",
+        display:"flex",
+        justifyContent:"center",
+        alignContent:"center",
+        borderRadius:8,
+        // Drop shadows à factoriser
+        shadowColor: '#000',
+        shadowOffset: {
+          width: 4, 
+          height: 2,
+        }}
 });
 
 export default WeeklyInformationScreen;

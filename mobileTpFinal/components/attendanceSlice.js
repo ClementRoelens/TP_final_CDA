@@ -39,6 +39,12 @@ export const getInitialClockInFromDatabase = createAsyncThunk(
     }
 );
 
+async function getIsPresent(employeeId) {
+    const headersValue = await getHeaders();
+    return (await axios.get(`http://localhost:8090/api/attendance/isPresent/${employeeId}`, {headers :headersValue})).data;
+}
+
+
 
 const attendanceSlice = createSlice({
     name: "attendance",
