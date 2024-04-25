@@ -25,6 +25,7 @@ public class Employee implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
     @NotBlank(message = "Please enter employee firstname")
     private String firstName;
 
@@ -32,7 +33,7 @@ public class Employee implements UserDetails {
     private String lastName;
 
     @Past(message = "Birthdate cannot be present or future date")
-    @JsonFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "dd-MM-yyyy")
     private Date birthDate;
 
     private String gender;

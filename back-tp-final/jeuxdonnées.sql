@@ -18,8 +18,6 @@ INSERT INTO attendance (start, end,  employee_id)
 VALUES
     ( ' 08:00:00','12:00:00', 1);
 
-ALTER TABLE employee ADD COLUMN address_id INT;
-
 
 INSERT INTO employee (id, birth_date, email, first_name, gender, last_name, password,  pay,  photo_path, role, address_id)
 VALUES

@@ -1,0 +1,227 @@
+{
+	"info": {
+		"_postman_id": "ffc6c83a-2a65-42b9-9430-e89e7e47cc0e",
+		"name": "tp_final",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "25719203",
+		"_collection_link": "https://dark-comet-762759.postman.co/workspace/Team-Workspace~b71bf4b5-5260-4610-8857-df160dadcef4/collection/25719203-ffc6c83a-2a65-42b9-9430-e89e7e47cc0e?action=share&source=collection_link&creator=25719203"
+	},
+	"item": [
+		{
+			"name": "get",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "get address by id",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n \r\n    \"name\": \"Nord\",\r\n    \"location\": \"Lomme\",\r\n    \"employees\": 1\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8090/api/address/101",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"api",
+						"address",
+						"101"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "post clock in",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": 1\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "text"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8090/api/attendance/clockIn",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"api",
+						"attendance",
+						"clockIn"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "post clock out",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": 1\r\n}  \r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8090/api/attendance/clockOut",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"api",
+						"attendance",
+						"clockOut"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get hours A DAY",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8090/api/attendance/hours-day/3?date=2024-04-25",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"api",
+						"attendance",
+						"hours-day",
+						"3"
+					],
+					"query": [
+						{
+							"key": "date",
+							"value": "2024-04-25"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get hours A week",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8090/api/attendance/week/1?startDate=2024-04-25&endDate=2024-04-30",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"api",
+						"attendance",
+						"week",
+						"1"
+					],
+					"query": [
+						{
+							"key": "startDate",
+							"value": "2024-04-25"
+						},
+						{
+							"key": "endDate",
+							"value": "2024-04-30"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get overtime",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"year\": 2024,\r\n    \"month\": 4,\r\n    \"day\": 25\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8090/api/attendance/day/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"api",
+						"attendance",
+						"day",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
