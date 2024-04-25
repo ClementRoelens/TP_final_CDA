@@ -1,0 +1,58 @@
+.container {
+  display:flex;
+  flex-direction: column;
+}
+
+.actions {
+    height:10vh;
+    display:flex;
+    justify-content: space-around;
+    align-items: center;
+    margin:10px 0;
+}
+
+.actions button {
+    background-color: white;
+    border:solid 1px var(--black);
+    border-radius: 8px;
+    padding:5px 20px;
+    cursor: pointer;
+    height:35px;
+}
+
+.actions input,
+.actions input:focus {
+  width:38.19vw;  
+  box-sizing: border-box;
+  height:35px;
+  border-radius: 7px;
+  border: solid 1px var(--black);
+}
+
+.table {
+  margin:auto 30px;
+  background-color: var(--grey);
+  border-radius: 8px;
+  border: solid 1px var(--black);
+  text-align: center;
+  color:var(--white);
+  border-collapse: collapse;
+}
+
+.thead {
+  border-bottom: solid 1px var(--black);
+  height:30px;
+}
+
+.add {
+  background-color: var(--intense);
+  border:none;
+  color:var(--white);
+  font-size: 1.1em;
+  padding:10px 20px;
+  border-radius: 10px;
+  display:block;
+  margin: 15px auto;
+  cursor:pointer;
+}
+

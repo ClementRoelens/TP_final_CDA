@@ -12,7 +12,7 @@ const EmployeeScreen = ({navigation}) => {
 
     useEffect(() => {
       if (employee != null){
-        dispatch(getInitialClockInFromDatabase());
+        dispatch(getInitialClockInFromDatabase(employee.id));
       }
     },[employee])
     

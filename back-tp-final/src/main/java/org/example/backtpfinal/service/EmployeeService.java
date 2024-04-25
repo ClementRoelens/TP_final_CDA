@@ -1,6 +1,8 @@
 package org.example.backtpfinal.service;
 
+
 import org.example.backtpfinal.config.jwt.JwtTokenProvider;
+import org.example.backtpfinal.dto.EmployeeDTO;
 import org.example.backtpfinal.entities.Employee;
 import org.example.backtpfinal.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -103,4 +105,22 @@ public class EmployeeService implements UserDetailsService, IBaseService<Employe
 
 
 
+    public Employee save(EmployeeDTO dto) {
+        Employee employee = Employee
+                .builder()
+                .firstName(dto.getFirstName())
+                .lastName(dto.getLastName())
+                .birthDate(dto.getBirthDate())
+                .gender(dto.getGender())
+                .email(dto.getEmail())
+                .pay(dto.getPay())
+                .password(dto.getPassword())
+                .role(dto.getRole())
+                .photoPath(dto.getPhotoPath())
+                .address(dto.getAddress().toEntity())
+                .build();
+        System.out.println(employee);
+        return employeeRepository.save(employee);
+
+    }
 }

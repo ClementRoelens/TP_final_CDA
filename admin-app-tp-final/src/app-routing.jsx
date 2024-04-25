@@ -4,7 +4,7 @@ import FormAddEmployee from"./routes/FormAddEmployee";
 import ForgotPasswordPage from"./routes/ForgotPasswordPage.jsx";
 import ListEmployeePage from"./routes/ListEmployeePage";
 import EmployeeDetailsPage from"./routes/EmployeeDetailsPage";
-import ProtectedRoute from './components/ProtectedRoute.jsx'
+import ProtectedRoute from './components/shared/ProtectedRoute.jsx'
 import App from "./App";
 
 

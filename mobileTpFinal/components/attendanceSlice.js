@@ -8,8 +8,8 @@ export const clockIn = createAsyncThunk(
     "attendance/clockIn",
     async (credentials) => {
         console.log("clockin")
-        const jwt = (await axios.post(`http://10.0.2.2:8090//api/attendances/clockIn`, credentials)).data;
-        await AsyncStorage.setItem("token", jwt);
+        return (await axios.post(`http://10.0.2.2:8090/api/attendance/clockIn`, credentials)).data;
+        // await AsyncStorage.setItem("token", jwt);
         return await getEmployee(credentials.clockIn);
     });
 
@@ -17,21 +17,23 @@ export const clockOut = createAsyncThunk(
     "attendance/clockOut",
     async (credentials) => {
         console.log("clockout")
-        const jwt = (await axios.post(`http://10.0.2.2:8090/api/attendances/clockOut`, credentials)).data;
-        await AsyncStorage.setItem("token", jwt);
+        return(await axios.post(`http://10.0.2.2:8090/api/attendance/clockOut`, credentials)).data;
+        // await AsyncStorage.setItem("token", jwt);
         return await getEmployee(credentials.clockOut);
     });
 
 export const getInitialClockInFromDatabase = createAsyncThunk(
     "attendance/geteInitialClock",
-    async () => {
+    async (employeeId) => {
         try {
-            const response = await axios.get("http://10.0.2.2:8090/api/attendances/clockIn");
+            const headers = {headers : getHeaders()};
+            const response = await axios.post("http://10.0.2.2:8090/api/attendance/clockIn", {id : employeeId}, );
             const data = response.data;
             console.log("getInitialClockIn", data);
             return data;
         } catch (error) {
-            console.error("Erreur lors de la récupération du clockIn depuis la base de données :", error);
+            console.error("Erreur lors de la récupération du clockIn depuis la base de données :");
+            console.error(error)
             return null;
         }
     }
