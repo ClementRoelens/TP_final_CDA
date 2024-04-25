@@ -21,7 +21,6 @@ import java.time.LocalDateTime;
 
 @RestController
 @RequestMapping("/api/attendance")
-@CrossOrigin(origins = "*")
 @Slf4j
 public class AttendanceController {
     @Autowired
