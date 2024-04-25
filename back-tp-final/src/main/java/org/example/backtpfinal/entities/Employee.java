@@ -6,11 +6,9 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Past;
 import lombok.*;
-import org.hibernate.annotations.GenericGenerator;
 
 import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 
 
 @Entity
@@ -174,4 +172,6 @@ public class Employee {
     public void setReportList(List<Report> reportList) {
         this.reportList = reportList;
     }
+
+
 }

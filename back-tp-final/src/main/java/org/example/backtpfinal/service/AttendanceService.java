@@ -1,6 +1,7 @@
 package org.example.backtpfinal.service;
 
 
+import lombok.extern.slf4j.Slf4j;
 import org.example.backtpfinal.entities.Attendance;
 import org.example.backtpfinal.entities.Employee;
 import org.example.backtpfinal.exception.EmployeeNotFound;
@@ -14,7 +15,9 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
 
+
 @Service
+@Slf4j
 public class AttendanceService implements IBaseService<Attendance> {
 
     @Autowired
@@ -24,15 +27,15 @@ public class AttendanceService implements IBaseService<Attendance> {
     private AttendanceRepository attendanceRepository;
 
 
-
     public List<Attendance> getAllAttendanceByEmployeeId(Long idEmployee) {
-        Employee employee = employeeRepository.findEmployeeById(idEmployee);
+        Optional<Employee> employee = employeeRepository.findEmployeeById(idEmployee);
         if (employee != null) {
 
-            return employee.getAttendancesList();
+            return employee.get().getAttendancesList();
         }
         return Collections.emptyList();
     }
+
     public Attendance findLastClockingPoint(Long employeeId) {
         Optional<Attendance> attendanceOptional = attendanceRepository.findLatestAttendanceByEmployeeId(employeeId);
         return attendanceOptional.orElse(null);
@@ -62,18 +65,14 @@ public class AttendanceService implements IBaseService<Attendance> {
     public void deleteById(Long id) {
 
     }
-    /*public List<Attendance> getAttendanceFromSelectedDate(Date date, Date currDate, Employee e) {
-        LocalDateTime localDate = date.toLocalDate().atStartOfDay();// 00:00:00.
-        LocalDateTime localCurrDate = currDate.toLocalDate().atStartOfDay().plusDays(1);
-        return attendanceRepository.getAttendanceByDay(localDate, localCurrDate, e);
-    }*/
+
 
 
     public LocalDateTime clockIn(Long employeeId, LocalDateTime clockInTime) throws EmployeeNotFound {
         Employee employee = employeeRepository.findById(employeeId)
                 .orElseThrow(() -> new EmployeeNotFound(employeeId));
 
-        Attendance attendance =  Attendance.builder()
+        Attendance attendance = Attendance.builder()
                 .employee(employee)
                 .start(LocalDateTime.now())
                 .build();
@@ -99,10 +98,9 @@ public class AttendanceService implements IBaseService<Attendance> {
         }
     }
 
-    public double calculateHoursWorkedByEmployeeForDay(LocalDate date, Employee e) {
+    /*public double calculateHoursWorkedByEmployeeForDay(LocalDate date, Employee e) {
         LocalDateTime startDate = date.atStartOfDay();
         LocalDateTime endDate = startDate.withHour(23).withMinute(59).withSecond(59);
-
         List<Attendance> attendances = this.attendanceRepository.getAttendanceByDay(startDate, endDate, e);
 
         Duration totalWorkingDuration = Duration.ZERO;
@@ -119,47 +117,92 @@ public class AttendanceService implements IBaseService<Attendance> {
         //convert in hour
         double totalWorkingHours = totalWorkingDuration.toMinutes() / 60.0;
         return totalWorkingHours;
-    }
+    }*/
+    public double calculateHoursWorkedByEmployeeForDay(LocalDate date, Long employeeId) {
+        // Recherche de l'employé par son ID
+        Employee employee = employeeRepository.findById(employeeId)
+                .orElseThrow(() -> new EmployeeNotFound(employeeId));
 
-    public Duration overtimeByWeek(Long employeeId) {
-        Optional<List<Attendance>> optionalAttendances = attendanceRepository.findAllAttendanceById(employeeId);
+        // Détermination de la période de la journée
+        LocalDateTime startDate = date.atStartOfDay();
+        LocalDateTime endDate = startDate.withHour(23).withMinute(59).withSecond(59);
 
-        if (optionalAttendances.isPresent()) {
-            List<Attendance> attendances = (List<Attendance>) optionalAttendances.get();
+        // Récupération des pointages de l'employé pour la journée donnée
+        List<Attendance> attendances = this.attendanceRepository.getAttendanceByDay(startDate, endDate, employee);
 
-            // Calculate daily working hours for all valid attendances
-            //Converts the List<Attendance> into stream
-            Duration dailyWorkingHours = attendances.stream()
-                    //keeps only  Attendance objects where the end time is not null.
-                    .filter(a -> a.getEnd() != null)
-                    //transforms each Attendance object into a Duration object
-                    .map(a -> Duration.between(a.getStart(), a.getEnd()))
-                    //combines all the Duration objects obtained from the map operation into a single Duration value
-                    .reduce(Duration.ZERO, Duration::plus);
+        // Calcul de la durée totale de travail
+        Duration totalWorkingDuration = Duration.ZERO;
+        for (Attendance attendance : attendances) {
+            LocalDateTime clockIn = attendance.getStart();
+            LocalDateTime clockOut = attendance.getEnd();
 
-            // standard 35 heures
-            Duration standardWeeklyWork = Duration.ofHours(35);
-            Duration overtime = dailyWorkingHours.minus(standardWeeklyWork);
-
-            return overtime.isNegative() ? Duration.ZERO : overtime;
-        }else {
-            return Duration.ZERO;
+            if (clockIn != null && clockOut != null) {
+                Duration attendanceDuration = Duration.between(clockIn, clockOut);
+                totalWorkingDuration = totalWorkingDuration.plus(attendanceDuration);
+            }
         }
-    }
-    public Duration calculateHoursWorkedByEmployeeForWeek(LocalDateTime startDate, LocalDateTime endDate, Employee employee) {
-         // between 2 dates definite
-        List<Attendance> attendances = attendanceRepository.getAttendanceByEmployeeByWeek(employee, startDate, endDate);
 
+        // Conversion de la durée totale de travail en heures
+        double totalWorkingHours = totalWorkingDuration.toMinutes() / 60.0;
+        return totalWorkingHours;
+    }
+
+
+
+
+    public Duration overtimeByWeek(Long employeeId, LocalDateTime startDate, LocalDateTime endDate) {
+        Duration totalHours = Duration.ZERO;
+        LocalDate currentDate = startDate.toLocalDate();
+
+
+        while (!currentDate.isAfter(endDate.toLocalDate())) {
+            totalHours = totalHours.plus(Duration.ofHours((long) calculateHoursWorkedByEmployeeForDay(currentDate, employeeId)));
+            currentDate = currentDate.plusDays(1);
+        }
+
+
+        Duration standardWeeklyWork = Duration.ofHours(35);
+
+
+        Duration overtime = totalHours.minus(standardWeeklyWork);
+        return overtime.isNegative() ? Duration.ZERO : overtime;
+    }
+
+
+
+
+
+    /*public Duration calculateHoursWorkedByEmployeeForWeek(LocalDateTime startDate, LocalDateTime endDate, Long employeeId) {
+        // between 2 dates definite
+        List<Attendance> attendances = attendanceRepository.getAttendanceByEmployeeByWeek(employeeId, startDate, endDate);
+        log.info("id" + employeeId);
         Duration totalWorkingDuration = Duration.ZERO;
         for (Attendance attendance : attendances) {
             LocalDateTime clockIn = attendance.getStart();
             LocalDateTime clockOut = attendance.getEnd();
             if (attendance.getStart() != null && attendance.getEnd() != null) {
-                Duration attendanceDuration = Duration.between(clockIn,clockOut);
+                Duration attendanceDuration = Duration.between(clockIn, clockOut);
                 totalWorkingDuration = totalWorkingDuration.plus(attendanceDuration);
             }
         }
 
         return totalWorkingDuration;
+    }*/
+    public Duration calculateHoursWorkedByEmployeeForWeek(LocalDateTime startDate, LocalDateTime endDate, Long employeeId) {
+        Duration totalWorkingDuration = Duration.ZERO;
+        LocalDate currentDate = startDate.toLocalDate();
+
+
+        while (!currentDate.isAfter(endDate.toLocalDate())) {
+            totalWorkingDuration = totalWorkingDuration.plus(Duration.ofHours((long) calculateHoursWorkedByEmployeeForDay(currentDate, employeeId)));
+            currentDate = currentDate.plusDays(1);
+        }
+
+        return totalWorkingDuration;
     }
+
+
+
+
 }
+

@@ -31,9 +31,11 @@ public interface AttendanceRepository extends JpaRepository<Attendance, Long> {
     @Query("SELECT a FROM Attendance a WHERE a.start >= :startDate AND a.start < :endDate AND a.employee = :employee")
     List<Attendance> getAttendanceByDay(@Param("startDate") LocalDateTime startDate, @Param("endDate") LocalDateTime endDate, @Param("employee") Employee employee);
 
-    @Query("SELECT a FROM Attendance a WHERE a.employee = ?1 AND a.start BETWEEN ?2 AND ?3")
+    /*@Query("SELECT a FROM Attendance a WHERE a.employee = ?1 AND a.start BETWEEN ?2 AND ?3")
     List<Attendance> getAttendanceByEmployeeByWeek(Employee employee, LocalDateTime startDate, LocalDateTime endDate);
-
+*/
+    @Query("SELECT a FROM Attendance a WHERE a.employee.id = ?1 AND a.start >= ?2 AND a.end <= ?3")
+    List<Attendance> getAttendanceByEmployeeByWeek(Long employeeId, LocalDateTime startDate, LocalDateTime endDate);
 
 
 }

@@ -9,7 +9,7 @@ import java.util.UUID;
 
 public interface EmployeeRepository extends JpaRepository<Employee,Long> {
 
-    Employee findEmployeeById(Long id);
+    Optional<Employee> findEmployeeById(Long id);
 
 
 }

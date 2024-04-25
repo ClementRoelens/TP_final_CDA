@@ -72,13 +72,5 @@ public class Attendance {
         this.employee = employee;
     }
 
-    @Override
-    public String toString() {
-        return "Attendance{" +
-                "id=" + id +
-                ", start=" + start +
-                ", end=" + end +
-                ", employee=" + employee +
-                '}';
-    }
+
 }

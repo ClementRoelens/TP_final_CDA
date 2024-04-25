@@ -37,13 +37,13 @@ public class EmployeeService implements  IBaseService<Employee>{
     @Override
     public Optional<Employee> getById(Long id) throws EmployeeNotFound {
 
-        Employee employee = employeeRepository.findEmployeeById(id);
+        Optional<Employee> employee = employeeRepository.findEmployeeById(id);
 
         if (employee == null) {
             throw new EmployeeNotFound(id);
         }
 
-        return Optional.of(employee);
+        return employee;
     }
 
     @Override

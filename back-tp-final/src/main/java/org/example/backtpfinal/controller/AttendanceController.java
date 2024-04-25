@@ -3,21 +3,20 @@ package org.example.backtpfinal.controller;
 import lombok.extern.slf4j.Slf4j;
 import org.example.backtpfinal.dto.AttendanceDTO;
 
-import org.example.backtpfinal.entities.Attendance;
 import org.example.backtpfinal.entities.Employee;
 import org.example.backtpfinal.exception.EmployeeNotFound;
 import org.example.backtpfinal.repository.AttendanceRepository;
 import org.example.backtpfinal.service.AttendanceService;
 import org.example.backtpfinal.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.*;
+
 
 
 @RestController
@@ -29,8 +28,7 @@ public class AttendanceController {
     private  AttendanceService attendanceService;
     @Autowired
     private EmployeeService employeeService;
-    @Autowired
-    private AttendanceRepository attendanceRepository;
+
 
 
     @PostMapping("/clockIn")
@@ -56,28 +54,38 @@ public class AttendanceController {
             Employee employee = employeeService.getById(employeeId)
                     .orElseThrow(() -> new EmployeeNotFound(employeeId));
 
-            double hoursWorked = attendanceService.calculateHoursWorkedByEmployeeForDay(date, employee);
+            double hoursWorked = attendanceService.calculateHoursWorkedByEmployeeForDay(date, employeeId);
 
             return ResponseEntity.ok(hoursWorked);
 
     }
-    @GetMapping("/{employeeId}/overtime") //http://localhost:8090/api/attendance/{id}/overtime
-    public ResponseEntity<Duration> getOvertimeForWeek(@PathVariable Long employeeId) {
-        Duration overtime = attendanceService.overtimeByWeek(employeeId);
+
+    @GetMapping("/overtime/{employeeId}")// http://localhost:8090/api/attendance/overtime/{employeeId}
+    public ResponseEntity<Duration> getOvertimeForWeek(@PathVariable Long employeeId,
+                                                       @RequestParam LocalDate startDate,
+                                                       @RequestParam LocalDate endDate) {
+        LocalDateTime startDateTime = startDate.atStartOfDay();
+        LocalDateTime endDateTime = endDate.atStartOfDay().plusDays(1).minusNanos(1);
+        Employee employee = employeeService.getById(employeeId)
+                .orElseThrow(() -> new EmployeeNotFound(employeeId));
+        Duration overtime = attendanceService.overtimeByWeek(employeeId, startDateTime, endDateTime);
         return ResponseEntity.ok(overtime);
     }
 
-    @GetMapping("week/{employeeId}")//http://localhost:8090/api/attendance/week/{id}?startDate=2024-04-25&endDate=2024-04-30
-    public ResponseEntity<Double> getEmployeeHoursForWeek(@PathVariable Long employeeId, @RequestParam LocalDateTime startDate, @RequestParam LocalDateTime endDate) throws EmployeeNotFound {
-       
+
+    @GetMapping("/week/{employeeId}") //http://localhost:8090/api/attendance/week/{id}?startDate=2024-04-25&endDate=2024-04-30
+    public ResponseEntity<Double> getEmployeeHoursForWeek(@PathVariable Long employeeId, @RequestParam LocalDate startDate, @RequestParam LocalDate endDate) throws EmployeeNotFound {
+        LocalDateTime startDateTime = startDate.atStartOfDay();
+        LocalDateTime endDateTime = endDate.atStartOfDay().plusDays(1).minusNanos(1); //sure that day ended by 23:59:59
         Employee employee = employeeService.getById(employeeId)
                 .orElseThrow(() -> new EmployeeNotFound(employeeId));
 
-        Duration hoursByEmployeeForWeek = attendanceService.calculateHoursWorkedByEmployeeForWeek(startDate, endDate, employee);
+        Duration hoursByEmployeeForWeek = attendanceService.calculateHoursWorkedByEmployeeForWeek( startDateTime, endDateTime, employeeId);
         double totalHours = hoursByEmployeeForWeek.toMinutes() / 60.0;
 
         return ResponseEntity.ok(totalHours);
     }
+
 
 
 }
