@@ -60,6 +60,16 @@ public class Attendance {
         return end;
     }
 
+    public Attendance() {
+    }
+
+    public Attendance(Long id, LocalDateTime start, LocalDateTime end, Employee employee) {
+        this.id = id;
+        this.start = start;
+        this.end = end;
+        this.employee = employee;
+    }
+
     public void setEnd(LocalDateTime end) {
         this.end = end;
     }
