@@ -78,8 +78,8 @@ public class EmployeeController {
     }
 
     @GetMapping()
-    public List<Employee> getAll() {
-        return employeeService.getAll();
+    public List<EmployeeDTO> getAll() {
+        return employeeService.getAll().stream().map(Employee::toDTO).toList();
     }
 
     @GetMapping("/{employeeId}/attendance")

@@ -53,6 +53,7 @@ public class SecurityConfig {
 
                                 .requestMatchers("/api/employees/signin").permitAll()
                                 .requestMatchers(HttpMethod.POST, "api/employees").permitAll()
+                                .requestMatchers("/api/employees","/api/attendance/isPresent/").hasRole("ADMIN")
                                 // Le garder à la fin : ce sera notre cas "par défaut"
                                 .anyRequest().authenticated()
                 )

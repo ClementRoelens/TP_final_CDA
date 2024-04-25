@@ -17,6 +17,7 @@ public class Attendance {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
     @JsonFormat(pattern = "dd-MM-yyyy")
     @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
     private LocalDateTime start;
@@ -24,9 +25,22 @@ public class Attendance {
     @JsonFormat(pattern = "dd-MM-yyyy")
     @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
     private LocalDateTime end;
+
     @ManyToOne
     @JoinColumn(name="employee_id")
     private Employee employee;
+
+
+    public Attendance() {
+    }
+
+    // Nécessaire pour le builder, ne pas supprimer
+    public Attendance(Long id, LocalDateTime start, LocalDateTime end, Employee employee) {
+        this.id = id;
+        this.start = start;
+        this.end = end;
+        this.employee = employee;
+    }
 
     public void setId(Long id) {
         this.id = id;

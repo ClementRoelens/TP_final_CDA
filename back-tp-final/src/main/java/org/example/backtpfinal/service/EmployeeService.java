@@ -1,13 +1,8 @@
 package org.example.backtpfinal.service;
 
-<<<<<<< HEAD
-import org.example.backtpfinal.config.jwt.JwtTokenProvider;
-=======
 
-import org.example.backtpfinal.dto.AddressDTO;
+import org.example.backtpfinal.config.jwt.JwtTokenProvider;
 import org.example.backtpfinal.dto.EmployeeDTO;
-import org.example.backtpfinal.entities.Address;
->>>>>>> app-mobile-viewSchedule
 import org.example.backtpfinal.entities.Employee;
 import org.example.backtpfinal.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -77,7 +72,6 @@ public class EmployeeService implements UserDetailsService, IBaseService<Employe
     }
 
 
-
     @Override
     public void deleteById(Long id) {
 
@@ -86,12 +80,14 @@ public class EmployeeService implements UserDetailsService, IBaseService<Employe
     public boolean verifyEmployee(String email, String password) {
         return employeeRepository.findByEmail(email)
                 .map(employee -> passwordEncoder.matches(password, employee.getPassword()))
-                        .orElseThrow(() -> new UsernameNotFoundException("Employee not found with email:" + email));
+                .orElseThrow(() -> new UsernameNotFoundException("Employee not found with email:" + email));
     }
 
-    public boolean checkEmployeeNameExist(String email) {return employeeRepository.findByEmail(email).isPresent();}
+    public boolean checkEmployeeNameExist(String email) {
+        return employeeRepository.findByEmail(email).isPresent();
+    }
 
-    public String generateToken(String email, String password, Collection<? extends GrantedAuthority> authorities){
+    public String generateToken(String email, String password, Collection<? extends GrantedAuthority> authorities) {
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(email, password, authorities));
         SecurityContextHolder.getContext().setAuthentication(authentication);
         return tokenProvider.generateToken(authentication);
@@ -104,11 +100,9 @@ public class EmployeeService implements UserDetailsService, IBaseService<Employe
                 .orElseThrow(() -> new UsernameNotFoundException("Employee not found with email: " + email));
     }
 
-    public boolean compareUserWithToken(Employee employee, String token){
+    public boolean compareUserWithToken(Employee employee, String token) {
         return tokenProvider.getUsernameFromToken(token).equals(employee.getEmail());
     }
-
-
 
     public Employee save(EmployeeDTO dto) {
         Employee employee = Employee
@@ -122,7 +116,7 @@ public class EmployeeService implements UserDetailsService, IBaseService<Employe
                 .password(dto.getPassword())
                 .role(dto.getRole())
                 .photoPath(dto.getPhotoPath())
-                .address(dto.getAddress())
+                .address(dto.getAddress().toEntity())
                 .build();
         System.out.println(employee);
         return employeeRepository.save(employee);

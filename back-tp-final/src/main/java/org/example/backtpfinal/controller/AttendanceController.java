@@ -79,5 +79,12 @@ public class AttendanceController {
         return ResponseEntity.ok(totalHours);
     }
 
-
+    @GetMapping("/isPresent/{employeeId}")
+    public ResponseEntity<String> isPresent(@PathVariable Long employeeId){
+        Attendance attendance = attendanceService.findLastClockingPoint(employeeId);
+        if (attendance != null && attendance.getEnd() == null){
+            return ResponseEntity.ok("Présent");
+        }
+        return ResponseEntity.ok("Absent");
+    }
 }
