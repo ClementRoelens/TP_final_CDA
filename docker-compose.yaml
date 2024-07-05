@@ -1,0 +1,43 @@
+services:
+  backend-java:
+    container_name: backend-java
+    build:
+      context: ./back-tp-final
+      dockerfile: Dockerfile
+    ports:
+      - "8090:8090"
+    environment:
+      DB_HOST: localhost
+      DB_PORT: 3306
+      DB_NAME: tp_final
+      DB_USERNAME: root
+      DB_PASS: admin
+      SPRING_PORT: 8090
+    networks:
+      - app-network
+
+  backoffice-react:
+    container_name: backoffice-react
+    build:
+      context: ./admin-app-tp-final
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    networks:
+      - app-network
+
+  frontend-react-native:
+    container_name: frontend-react-native
+    build:
+      context: ./mobileTpFinal
+      dockerfile: Dockerfile
+    ports:
+      - "19000:19000"
+      - "19001:19001"
+      - "19002:19002"
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge

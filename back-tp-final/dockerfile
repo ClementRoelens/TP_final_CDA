@@ -1,0 +1,5 @@
+FROM adoptopenjdk/openjdk17:alpine-jre
+WORKDIR /app
+COPY target/your-application.jar /app/app.jar
+EXPOSE 8090
+CMD ["java", "-jar", "app.jar"]
